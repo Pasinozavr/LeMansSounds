@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MapsActivityCurrentPlace">
+
+    <item
+        android:id="@+id/menu_zoom"
+        android:title="ZOFF"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/menu_info"
+        android:title="GROUP INFO"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/menu_sound"
+        android:title="Sound"
+        app:showAsAction="always"/>
+
+
+
+</menu>
