@@ -24,7 +24,6 @@ public class GroupDialog extends DialogFragment implements OnClickListener {
     }
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getDialog().setTitle("Title!");
         View v = inflater.inflate(R.layout.groupdialog, null);
 
         img = v.findViewById(R.id.imageGroup);

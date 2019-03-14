@@ -23,24 +23,21 @@ public class SuperBubble extends Bubble {
     {
         listOfBubbles.get(0).draw_bubble(map);
     }
-    public String getImageLink()
-    {
-        return imageLink;
-    }
     public void play_go ()
     {
         if(!playing)
         {
             Random rnd = new Random();
             int size = listOfBubbles.size(), playFirst = rnd.nextInt(size), playSecond = rnd.nextInt(size), levelFirst = listOfBubbles.get(playFirst).getLevel(), levelSecond = listOfBubbles.get(playSecond).getLevel();
-            listOfBubbles.get(playFirst).sound_play();
-
+            listOfBubbles.get(0).sound_play();
+/*
             do {
                 playSecond = rnd.nextInt(size);
                 levelSecond = listOfBubbles.get(playSecond).getLevel();
             } while ( levelSecond == levelFirst);
 
             listOfBubbles.get(playSecond).sound_play();
+            */
             playing = true;
         }
     }
@@ -72,4 +69,21 @@ public class SuperBubble extends Bubble {
     {
         return playing;
     }
+    public String getImageLink()
+    {
+        return listOfBubbles.get(0).getImageLink();
+    }
+    public String getName()
+    {
+        return listOfBubbles.get(0).getName();
+    }
+    public String getDescription()
+    {
+        return listOfBubbles.get(0).getDescription();
+    }
+    public List<Bubble> getAllBubble()
+    {
+        return listOfBubbles;
+    }
+
 }

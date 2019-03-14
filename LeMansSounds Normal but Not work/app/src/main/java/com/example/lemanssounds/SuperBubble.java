@@ -1,5 +1,7 @@
 package com.example.lemanssounds;
 
+import android.app.Activity;
+
 import com.google.android.gms.maps.GoogleMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +11,7 @@ public class SuperBubble extends Bubble {
     private List<Bubble> listOfBubbles;
     private boolean playing = false;
     public String imageLink;
+    public String description, title;
 
     public SuperBubble(){
         listOfBubbles = new ArrayList<>();
@@ -69,5 +72,13 @@ public class SuperBubble extends Bubble {
     public boolean getPlaying()
     {
         return playing;
+    }
+    @Override
+    public void setPlayer(Activity act)
+    {
+        for (Bubble b: listOfBubbles
+             ) {
+            b.setPlayer(act);
+        }
     }
 }

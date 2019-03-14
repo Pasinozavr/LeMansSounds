@@ -54,7 +54,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMapReadyCallback {
+public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
     private static final String TAG = MapsActivityCurrentPlace.class.getSimpleName();
     public GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
@@ -78,6 +78,8 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
     private Context context;
     private SuperBubble cur;
 
+    private Bubble [] badcodeBubble = new Bubble[16];
+
     private static final String TAG_GEOSOUNDS = "geosounds";
     private static final String TAG_IMAGE = "geosound_picture";
     private static final String TAG_SOUND = "geosound_soundfile";
@@ -94,7 +96,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
     private static final class Lock { }
     private final Object lock = new Lock();
 
-    public SuperBubble testSuper = new SuperBubble(), superUniversity = new SuperBubble(), laMuraille = new SuperBubble(), lAttente = new SuperBubble(), laGrandRue = new SuperBubble(), laMaisonDoisneau = new SuperBubble(), leCardinalGrente = new SuperBubble(), leMenhir = new SuperBubble(), lePilierRouge = new SuperBubble(), lesPansdeGorron = new SuperBubble(),lesVignes = new SuperBubble();
+    public SuperBubble testSuper = new SuperBubble(), superUniversity = new SuperBubble(), 	laMesse = new SuperBubble(), ambianceVignes = new SuperBubble(), erranceetRois = new SuperBubble(), laMuraille = new SuperBubble(), lAttente = new SuperBubble(), laGrandRue = new SuperBubble(), laMaisonDoisneau = new SuperBubble(), leCardinalGrente = new SuperBubble(), leMenhir = new SuperBubble(), lePilierRouge = new SuperBubble(), lePilierRougeAMB = new SuperBubble(), lesPansdeGorron = new SuperBubble(),lesVignes = new SuperBubble();
 
     public static String getHexColor(int r, int g, int b,
                                      boolean inverseOrder) {
@@ -112,6 +114,28 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
         }
     }
 
+    @Override
+    public void onMapClick(LatLng point) {
+        Location point1_this = new Location("My point"), point2_center = new Location("Center point");
+
+        point1_this.setLatitude(point.latitude);
+        point1_this.setLongitude(point.longitude);
+
+        for (final SuperBubble s: testUniverse) {
+            point2_center.setLatitude(s.getLatitude());
+            point2_center.setLongitude(s.getLonguitude());
+
+            double distance = point2_center.distanceTo(point1_this);
+
+            if (distance <= s.getRadius()) {
+                cur = s;
+                dlg = new GroupDialog(s.getImageLink(), s.getDescription(), s.getName(), cur);
+                dlg.show(getFragmentManager(), "groupdialog");
+                break;
+            }
+        }
+
+    }
 
     private class RetrieveMessages extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... urls) {
@@ -270,6 +294,18 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
         startActivity(new Intent(getApplicationContext(),MainActivity.class));
         return true;
     }
+
+    private void setUpMap() //If the setUpMapIfNeeded(); is needed then...
+    {
+        mMap.setOnMapClickListener(this);
+    }
+public void setPlayersAll()
+{
+    for (Bubble b: badcodeBubble
+    ) {
+        b.setPlayer(this);
+    }
+}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -293,141 +329,69 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
 
         Toast.makeText(getApplicationContext(), "Downloading data", Toast.LENGTH_LONG).show();
 
-
         //GOVNOKOD
-        Bubble lAttent = new Bubble();
-        lAttent.setPlayer(this);
-        lAttent.setColor(getHexColor(168,168,168,true));
-        lAttent.setLatitude(48.01001927);
-        lAttent.setLonguitude(0.19940123);
-        lAttent.setRadius(20);
-        lAttente.name="L'attente";
-        lAttente.description="Le duo de comiques troupiers";
-        lAttente.addBubble(lAttent);
-        lAttente.imageLink = "https://soundways.eu/data/images/img_c3466670c83bb46b74a1916a59941d50.jpg";
 
+        badcodeBubble[0] = new Bubble(122, 6, 118, 48.00672106, 0.19577265, 43, "Ambiance vignes", "Pierre Saint Julien", "https://soundways.eu/data/sounds/sound_a12940d9160d8b26b7a4372ca4631b76.mp3", "https://www.koshurmedicalmart.com/uploads/no_image_new.png");
+        badcodeBubble[1] = new Bubble(168, 168, 168, 48.01001927, 0.19940123, 20, "L'attente", "Le duo de comiques troupiers", "", "https://soundways.eu/data/images/img_c3466670c83bb46b74a1916a59941d50.jpg");
+        badcodeBubble[2] = new Bubble(209, 147, 53, 48.00741732, 0.19588888, 38, "La grande Rue", "Texte des historiens", "", "https://soundways.eu/data/images/img_53d30c4532bcc5f7cc573daa9e6a673d.jpg");
+        badcodeBubble[3] = new Bubble( 235, 255, 0, 48.00806154, 0.19582048, 14, "La maison Doisneau", "Texte des historien", "https://soundways.eu/data/sounds/sound_2bb043177af4dd9da57b32245c32e7b2.mp3", "https://soundways.eu/data/images/img_413cefd2448263b39c93bd6ecc913e54.jpg");
+        badcodeBubble[4] = new Bubble(255, 199, 0, 48.00930509, 0.19807220, 27, "La messe en latin", "Le choeur des moines bénédictins de l'abbaye de Pannonhalma", "https://soundways.eu/data/sounds/sound_eed0e4c7ca2da4dde9052f7a6f1aa4a1.mp3", "https://www.koshurmedicalmart.com/uploads/no_image_new.png");
+        badcodeBubble[5] = new Bubble( 173, 255, 0, 48.01015205, 0.19871235, 29, "La messe en latin", "Le choeur des moines bénédictins de l'abbaye de Pannonhalma", "https://soundways.eu/data/sounds/sound_f87f14fffbe685111a4e82db05922f79.mp3", "https://www.koshurmedicalmart.com/uploads/no_image_new.png");
+        badcodeBubble[6] = new Bubble( 235, 255, 0, 48.00995467, 0.19810617, 20, "La messe en latin", "Le choeur des moines bénédictins de l'abbaye de Pannonhalma", "https://soundways.eu/data/sounds/sound_e9d23c39997d238d9b981294c7629fd7.mp3", "https://www.koshurmedicalmart.com/uploads/no_image_new.png");
+        badcodeBubble[7] = new Bubble( 255, 107, 0, 48.00995826, 0.19660100, 28, "La muraille", "texte des historien", "", "https://previews.dropbox.com/p/thumb/AAUL6fDcStDrD7hfCoZ9YF5xuCrdoJvlSCo4IhPQy2OwqyKRrbbnMoqP8QoWfV3eVjjDf2N9auLYmHmXUxzVt_h1lVLAFiiGUmf1LS2OjtRYYetNKzMKw474NlDb676MBj8H71qRauWMcWzLDonM_mtat411SlDM7cN59MjDg_ylGSsq1hWQnLq9FzNhy_HxiYYaj0QKChOkRdPsvu3Wgm0-iWUwyF5tvE7VHJTy6gk2Q6C3Ryjqq0MRb2wFyxL4BEqp60q_9XQU0J9OABujgJ-yUUxJ7GSFTYxxaqDMp3Cg4g/p.jpeg");
+        badcodeBubble[8] = new Bubble(237, 34, 34, 48.00977523, 0.19824833, 10, "Le cardinal Grente", "Texte des historiens", "", "https://soundways.eu/data/images/img_c49399881ae58e85097ea291b94040f8.jpg");
+        badcodeBubble[9] = new Bubble( 237, 34, 34, 48.00977523, 0.19824833, 10, "Le cardinal Grente", "Texte des historiens", "", "https://soundways.eu/data/images/img_c49399881ae58e85097ea291b94040f8.jpg");
+        badcodeBubble[10] = new Bubble(190, 12, 235, 48.00955990, 0.19803911, 19, "Le menhir", "Texte des historien", "https://soundways.eu/data/sounds/sound_3da4392353b7ce32201d030a8c4b9e09.mp3", "https://previews.dropbox.com/p/thumb/AAVXxP8xu4CaamO4Kgr2kZUMFleDv_XNlDo-8761yCm13cbVAD7fXW9ON5Xb3eDVHcIgkVYwmZkIAgSoG0hH4Bbrtrssf4qKda2p8A4tPqR8XYnuWxRl7OEqQ04Czs6c4bJbx8pSO9Y6lIBCGD2GLencyahlGi3bummhLvxRDhpM5e0BySdOAHl0xK7hnX0tgowCoCaAM9er2v-vMF3MY0FcWywzzALBn_nCVDx4QcNSMgHNcDzbDe6mMfJhP0LRqujVCb3AYXvI2QTYoNNZg5wBZW0uG--a-MO6JG-kOQoFRQ/p.jpeg");
+        badcodeBubble[11] = new Bubble( 212, 0, 63, 48.00845632, 0.19694969, 21, "Le pilier rouge", "Texte des historiens", "https://soundways.eu/data/sounds/sound_3da40050833baaaa1635a039f3b2aef9.mp3", "https://soundways.eu/data/images/img_8bfc863eef60154c150b65d132b65de5.jpeg");
+        badcodeBubble[12] = new Bubble( 209, 61, 105, 48.00844735, 0.19695014, 53, "Le pilier rouge AMB", "Pas de texte", "https://soundways.eu/data/sounds/sound_2817a95c00ecf0142f624d90cb78709a.mp3", "https://soundways.eu/data/images/img_51975f50a0bede4a4bcad5cbabfd04b4.jpeg");
+        badcodeBubble[13] = new Bubble( 255, 0, 230, 48.01004260, 0.19726083, 20, "Les Pans de Gorron - Maisons closes", "Texte des historiens", "", "https://soundways.eu/data/images/img_e358f8c94b3052ab7ad8609cb89293a6.jpg");
+        badcodeBubble[14] = new Bubble( 140, 9, 9, 48.00684308, 0.19584462, 19, "Les vignes", "Texte des historien", "https://soundways.eu/data/sounds/sound_fb37b0735a8dfeece7d6d47586e6ed8a.mp3", "https://soundways.eu/data/images/img_4884fc0cd455c422ee277d1a39c89b4b.jpg");
+        badcodeBubble[15] = new Bubble( 0, 255, 255, 48.0079041, 0.1963019, 20, "Errance et Rois (RFI LE MANS)", "De l’utilité de perdre Richard Coeur de Lion et Jean Sans Terre\n" +
+                "Ballade sonore en compagnie de Richard Coeur de Lion et de Jean Sans Terre, son frère, dans la cité plantagenêt à travers les lieux emblématiques de la cité médiévale. Projet OIC", "", "https://soundways.eu//data//images//img_36797356da7392fb26cda77d0f2f1d0e.jpg");
+
+        setPlayersAll();
+
+        ambianceVignes.addBubble(badcodeBubble[0]);
+        lAttente.addBubble(badcodeBubble[1]);
+        laGrandRue.addBubble(badcodeBubble[2]);
+        laMaisonDoisneau.addBubble(badcodeBubble[3]);
+        laMesse.addBubble(badcodeBubble[4]);
+        laMesse.addBubble(badcodeBubble[5]);
+        laMesse.addBubble(badcodeBubble[6]);
+        laMuraille.addBubble(badcodeBubble[7]);
+        leCardinalGrente.addBubble(badcodeBubble[8]);
+        leCardinalGrente.addBubble(badcodeBubble[9]);
+        leMenhir.addBubble(badcodeBubble[10]);
+        lePilierRouge.addBubble(badcodeBubble[11]);
+        lePilierRougeAMB.addBubble(badcodeBubble[12]);
+        lesPansdeGorron.addBubble(badcodeBubble[13]);
+        lesVignes.addBubble(badcodeBubble[14]);
+        erranceetRois.addBubble(badcodeBubble[15]);
+
+        testUniverse.add(ambianceVignes);
         testUniverse.add(lAttente);
-        Bubble laGrandeRu = new Bubble();
-        laGrandeRu.setPlayer(this);
-        laGrandeRu.setColor(getHexColor(209,147,53,true));
-        laGrandeRu.setLatitude(48.00741732);
-        laGrandeRu.setLonguitude(0.19588888);
-        laGrandeRu.setRadius(38);
-        laGrandRue.name="La grande Rue";
-        laGrandRue.description="Texte des historiens";
-        laGrandRue.addBubble(laGrandeRu);
-        laGrandRue.imageLink = "https://soundways.eu/data/images/img_53d30c4532bcc5f7cc573daa9e6a673d.jpg";
         testUniverse.add(laGrandRue);
-
-        Bubble a = new Bubble();
-        a.setPlayer(this);
-        a.setAudioLink("https://soundways.eu/data/sounds/sound_2bb043177af4dd9da57b32245c32e7b2.mp3");
-        a.setColor(getHexColor(235,255,0,true));
-        a.setLatitude(48.00806154);
-        a.setLonguitude(0.19582048);
-        a.setRadius(14);
-        laMaisonDoisneau.name = "La maison Doisneau";
-        laMaisonDoisneau.description="Texte des historien";
-        laMaisonDoisneau.addBubble(a);
-        laMaisonDoisneau.imageLink = "https://soundways.eu/data/images/img_413cefd2448263b39c93bd6ecc913e54.jpg";
         testUniverse.add(laMaisonDoisneau);
-
-        Bubble laMuraill = new Bubble();
-        laMuraill.setLatitude(48.00995826);
-        laMuraill.setLonguitude(0.19660100);
-        laMuraill.setRadius(28);
-        laMuraill.setColor(getHexColor(255,107,0,true));
-        laMuraille.addBubble(laMuraill);
-        laMuraille.imageLink= "https://soundways.eu/data/images/img_3a81d838a4d43881d44a94a35cdddb0f.jpg";
-        laMuraille.name = "La muraille";
-        laMuraille.description="texte des historien";
+        testUniverse.add(laMesse);
         testUniverse.add(laMuraille);
-
-        Bubble b = new Bubble();
-        b.setPlayer(this);
-        b.setColor(getHexColor(237,34,34,true));
-        b.setLatitude(48.00977523);
-        b.setLonguitude(0.19824833);
-        b.setRadius(10);
-        leCardinalGrente.name = "Le cardinal Grente";
-        leCardinalGrente.description="Texte des historiens";
-        leCardinalGrente.addBubble(b);
-        leCardinalGrente.imageLink = "https://soundways.eu/data/images/img_c49399881ae58e85097ea291b94040f8.jpg";
         testUniverse.add(leCardinalGrente);
-
-
-        Bubble c = new Bubble();
-        c.setPlayer(this);
-        c.setColor(getHexColor(190,12,235,true));
-        c.setLatitude(48.00955990);
-        c.setLonguitude(0.19803911);
-        c.setRadius(19);
-        leMenhir.addBubble(c);
-        leMenhir.name = "Le menhir";
-        leMenhir.description = "Texte des historien";
-        leMenhir.imageLink = "https://soundways.eu/data/images/img_151e59c728d125ae9517f300a29d86af.jpg";
         testUniverse.add(leMenhir);
-        Bubble d = new Bubble();
-        d.setPlayer(this);
-        d.setAudioLink("https://soundways.eu/data/sounds/sound_e638b11d555d8b7aa6042836987c1774.mp3");
-        d.setLevel(1);
-        d.setColor(getHexColor(212,0,63,true));
-        d.setLatitude(48.00845632);
-        d.setLonguitude(0.19694969);
-        d.setRadius(21);
-        lePilierRouge.name = "Le pilier rouge";
-        lePilierRouge.description = "Texte des historiens";
-        lePilierRouge.addBubble(d);
-
-        Bubble d2 = new Bubble();
-        d2.setPlayer(this);
-        d2.setColor(getHexColor(212,0,63,true));
-        d2.setLatitude(48.00845632);
-        d2.setLonguitude(0.19694969);
-        d2.setRadius(21);
-        d2.setAudioLink("https://soundways.eu/data/sounds/sound_2817a95c00ecf0142f624d90cb78709a.mp3");
-        d2.setLevel(2);
-        lePilierRouge.addBubble(d2);
-
-        lePilierRouge.imageLink = "https://soundways.eu/data/images/img_8bfc863eef60154c150b65d132b65de5.jpeg";
         testUniverse.add(lePilierRouge);
-        Bubble e = new Bubble();
-        e.setPlayer(this);
-        e.setColor(getHexColor(255,0,230,true));
-        e.setLatitude(48.01004260);
-        e.setLonguitude(0.19726083);
-        e.setRadius(20);
-        lesPansdeGorron.name = "Les Pans de Gorron - Maisons closes";
-        lesPansdeGorron.description="Texte des historiens";
-        lesPansdeGorron.addBubble(e);
-        lesPansdeGorron.imageLink = "https://soundways.eu/data/images/img_e358f8c94b3052ab7ad8609cb89293a6.jpg";
+        testUniverse.add(lePilierRougeAMB);
         testUniverse.add(lesPansdeGorron);
-        Bubble f = new Bubble();
-        f.setPlayer(this);
-        f.setColor(getHexColor(140,9,9,true));
-        f.setLatitude(48.00684308);
-        f.setLonguitude(0.19584462);
-        f.setRadius(19);
-        lesVignes.name = "Les vignes";
-        lesVignes.description = "Texte des historien";
-        lesVignes.addBubble(f);
-        lesVignes.imageLink = "https://soundways.eu/data/images/img_4884fc0cd455c422ee277d1a39c89b4b.jpg";
         testUniverse.add(lesVignes);
+        testUniverse.add(erranceetRois);
+
         Toast.makeText(getApplicationContext(), "Data downloaded", Toast.LENGTH_LONG).show();
 
-        cur = lePilierRouge;
         timer = new Timer(true);
 
-        timerTask = new TimerTask()
-        {
+        timerTask = new TimerTask() {
             @Override
-            public void run()
-            {
-                handler.post(new Runnable()
-                {
+            public void run() {
+                handler.post(new Runnable() {
                     @Override
-                    public void run()
-                    {
+                    public void run() {
                         checkForBubbleInteraction();
                     }
                 });
@@ -435,32 +399,8 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
         };
         timer.schedule(timerTask, 2000, 10000);
 
+        cur = ambianceVignes;
     }
-    private void downloadBubble(String doi, boolean twiced)
-    {
-        if(twiced)
-        {
-            same = true;
-        }
-        else
-        {
-            same = false;
-        }
-        new RetrieveMessages().execute("http://soundways.eu/interface/geosound.php?_action=getGeoSound&geosounddoi=" + doi);
-        synchronized (lock) {
-            while (!downloaded) {
-                try {
-                    lock.wait();
-                }
-                catch (InterruptedException e)
-                {
-                    Toast.makeText(getApplicationContext(), "WTF", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-
-    }
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         if (mMap != null) {
@@ -485,43 +425,18 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getItemId() == R.id.menu_zoom)
-        {
-            if(moveCamera) {
+        if (item.getItemId() == R.id.menu_zoom) {
+            if (moveCamera) {
                 notification("Zoom was turn off", false);
-                item.setTitle("ZON");
+                item.setTitle("ZOOM - TURN ON");
                 moveCamera = false;
-            }
-            else
-            {
+            } else {
                 notification("Zoom was turn on", false);
-                item.setTitle("ZOFF");
+                item.setTitle("ZOOM - TURN OFF");
                 moveCamera = true;
             }
         }
-        if(item.getItemId() == R.id.menu_info)
-        {
-            dlg = new GroupDialog(cur.getImageLink(), cur.description, cur.name);
-            dlg.show(getFragmentManager(), "groupdialog");
-        }
-        if(item.getItemId() == R.id.menu_sound)
-        {
-            if (cur.getAudioLink()!= "")
-            {
-                if(cur.getPlaying())cur.play_stop();
-                else
-                {
-                    cur.play_go();
-                }
-            }
-            else
-            {
 
-                //notification("No audio file", false);
-            }
-
-
-        }
         return true;
     }
 
@@ -564,6 +479,8 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
         getLocationPermission();
         updateLocationUI();
         getDeviceLocation();
+
+        setUpMap();
     }
     public void getDeviceLocation() {
         try {

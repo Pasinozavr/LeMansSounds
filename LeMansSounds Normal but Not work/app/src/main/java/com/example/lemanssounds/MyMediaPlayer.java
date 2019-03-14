@@ -26,15 +26,18 @@ public class MyMediaPlayer {
                 e.printStackTrace();
             }
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mediaPlayer.setOnPreparedListener(this);
             mediaPlayer.prepareAsync();
 
             if (mediaPlayer == null) return;
-            mediaPlayer.start();
+            //mediaPlayer.start();
         }
         else
         {
 
         }
+
+
     }
 
     public void stop()
