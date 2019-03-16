@@ -10,9 +10,12 @@ import java.util.Random;
 public class SuperBubble extends Bubble {
     private List<Bubble> listOfBubbles;
     private boolean playing = false;
-    public String imageLink;
-    public String description, title;
 
+    public SuperBubble(Bubble b)
+    {
+        listOfBubbles = new ArrayList<>();
+        listOfBubbles.add(b);
+    }
     public SuperBubble(){
         listOfBubbles = new ArrayList<>();
     }
@@ -24,24 +27,21 @@ public class SuperBubble extends Bubble {
     {
         listOfBubbles.get(0).draw_bubble(map);
     }
-    public String getImageLink()
-    {
-        return imageLink;
-    }
     public void play_go ()
     {
         if(!playing)
         {
             Random rnd = new Random();
             int size = listOfBubbles.size(), playFirst = rnd.nextInt(size), playSecond = rnd.nextInt(size), levelFirst = listOfBubbles.get(playFirst).getLevel(), levelSecond = listOfBubbles.get(playSecond).getLevel();
-            listOfBubbles.get(playFirst).sound_play();
-
+            listOfBubbles.get(0).sound_play();
+/*
             do {
                 playSecond = rnd.nextInt(size);
                 levelSecond = listOfBubbles.get(playSecond).getLevel();
             } while ( levelSecond == levelFirst);
 
             listOfBubbles.get(playSecond).sound_play();
+            */
             playing = true;
         }
     }
@@ -73,12 +73,25 @@ public class SuperBubble extends Bubble {
     {
         return playing;
     }
-    @Override
-    public void setPlayer(Activity act)
+    public String getImageLink()
     {
-        for (Bubble b: listOfBubbles
-             ) {
-            b.setPlayer(act);
-        }
+        return listOfBubbles.get(0).getImageLink();
     }
+    public String getName()
+    {
+        return listOfBubbles.get(0).getName();
+    }
+    public String getDescription()
+    {
+        return listOfBubbles.get(0).getDescription();
+    }
+    public List<Bubble> getAllBubble()
+    {
+        return listOfBubbles;
+    }
+    @Override
+    public String getAudioLink() { return listOfBubbles.get(0).getAudioLink(); }
+    @Override
+    public String getAutor() { return listOfBubbles.get(0).getAutor(); }
+
 }

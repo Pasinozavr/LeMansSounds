@@ -6,17 +6,9 @@
 
     <item
         android:id="@+id/menu_zoom"
-        android:title="ZOFF"
+        android:title="ZOOM - TURN OFF"
         app:showAsAction="always"/>
-    <item
-        android:id="@+id/menu_info"
-        android:title="GROUP INFO"
-        app:showAsAction="always"
-        />
-    <item
-        android:id="@+id/menu_sound"
-        android:title="Sound"
-        app:showAsAction="always"/>
+
 
 
 

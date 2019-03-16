@@ -7,12 +7,13 @@ import com.google.android.gms.maps.model.LatLng;
 import android.app.Activity;
 import android.graphics.Color;
 
+import static com.example.lemanssounds.MapsActivityCurrentPlace.getHexColor;
+
 
 public class Bubble {
     private float radius, volume;
     private double longuitude, latitude;
-    private String type, audioLink;
-    private String color;
+    private String audioLink, color, name, description, imageLink, autor;
     private int level;
     private MyMediaPlayer player;
     private boolean playing = false;
@@ -21,19 +22,21 @@ public class Bubble {
     public Bubble() {
         level = 1;
         radius = 50;
-        audioLink = "https://soundways.eu//data//sounds//sound_2bb043177af4dd9da57b32245c32e7b2.wav";
+        audioLink = "";
         color= "FF0000";
     }
-    public Bubble(double templong, double templat, float temprad, String templink, String tempcolor, String temptype, int templvl)
+    public Bubble(int r, int g, int b, double lat, double lon, int rad, String textName, String textDescription, String textAudioLink, String textImageLink)
     {
-        longuitude = templong;
-        latitude = templat;
-        radius = temprad;
-        audioLink = templink;
+        longuitude = lon;
+        latitude = lat;
+        radius = rad;
+        audioLink = textAudioLink;
         volume = 1;
-        color = tempcolor;
-        type = temptype;
-        level = templvl;
+        color = getHexColor(r,g,b,true);
+        description = textDescription;
+        name = textName;
+        imageLink = textImageLink;
+        level = 1;
     }
     public void setPlayer(Activity act){
        // this.act = act;
@@ -55,10 +58,6 @@ public class Bubble {
     {
         if (tmp >= 0 && tmp <=1) volume = tmp;
     }
-    public void setType (String tmp)
-    {
-        type = tmp;
-    }
     public void setAudioLink (String tmp)
     {
         audioLink = tmp;
@@ -72,7 +71,6 @@ public class Bubble {
     public double getLatitude () { return latitude;}
     public float getRadius () { return radius;}
     public float getVolume () { return volume;}
-    public String getType () { return type;}
     public String getAudioLink () { return audioLink;}
     public String getColor () { return color;}
     public int getLevel() { return level;}
@@ -88,17 +86,48 @@ public class Bubble {
 
     public void sound_pause()
     {
-        player.pause();
+        if(audioLink!="")player.pause();
         playing = false;
     }
     public void sound_stop()
     {
-        player.stop();
+        if(audioLink!="")player.stop();
         playing = false;
     }
     public void sound_play()
     {
-        player.play();
+        if(audioLink!="")player.play();
         playing = true;
     }
+    public void setName(String nm)
+    {
+        name = nm;
+    }
+    public void setDescription(String des)
+    {
+        description = des;
+    }
+    public String getName()
+    {
+        return name;
+    }
+    public String getDescription()
+    {
+        return description;
+    }
+    public String getImageLink()
+    {
+        return imageLink;
+    }
+    public void setImageLink(String lnk)
+    {
+        imageLink = lnk;
+    }
+    public void setAutor(String aut)
+    {
+        autor = aut;
+    }
+    public String getAutor()
+    { return autor;}
 }
+

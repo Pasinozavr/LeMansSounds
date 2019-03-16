@@ -11,6 +11,8 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 
@@ -54,7 +56,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMapReadyCallback {
+public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
     private static final String TAG = MapsActivityCurrentPlace.class.getSimpleName();
     public GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
@@ -72,11 +74,13 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
     public final Handler handler = new Handler();
     public TimerTask timerTask;
     private Toolbar toolbar;
-    public boolean moveCamera = true, downloaded = true, same = false, downloadEnded = false;
+    public boolean moveCamera = true, downloaded = false, same = false, notif = false;
     private DialogFragment dlg;
     private AlertDialog.Builder ad;
     private Context context;
     private SuperBubble cur;
+
+    private Bubble [] badcodeBubble = new Bubble[16];
 
     private static final String TAG_GEOSOUNDS = "geosounds";
     private static final String TAG_IMAGE = "geosound_picture";
@@ -87,6 +91,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
     private static final String TAG_RADIUS= "radius";
     private static final String TAG_DESCRIPTION= "geosound_description";
     private static final String TAG_TITLE= "geosound_title";
+    private static final String TAG_AUTOR= "geosound_author";
     private JSONArray geoSoundTitle = null;
 
     private String downloadBubbleTitle, downloadBubbleDescription, downloadBubbleImage, downloadBubbleSound, downloadBubbleColor, downloadBubbleLatitude, downloadBubbleLongutide, downloadBubbleRadius;
@@ -95,23 +100,6 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
     private SuperBubble tempSuperBubble = new SuperBubble();
     private static final class Lock { }
     private final Object lock = new Lock();
-
-    private int downloadIndex = 0;
-
-    private String[] downloadLinks = {
-            "72ccf2966fdc7eb01c56d7481c6ef9bd",
-            "59acd52a90a3cd6e85937a146641e341",
-            "ef51b4a8e7b261a2ec3be0087ac5f86b",
-            "2fbcf636069b2e44b4b41e7edb7e6cea",
-            "80cb7300c1921fd7cf79b4ad54d45a3b",
-            "fa59738b5d6378c5a9cba14e9c326c99",
-            "b0b9af68a344cbdd66ce7495daf268ec",
-            "2c85e1b1dbda067e3d93c5d81eb6d74d",
-            "73d678cffb29c1cd4ff89a84b6cb6dec",
-            "9815e1dbe76789c5f3e6c4639d1ea23e",
-            "eb67ef9a0d58910cb0d70c5921787585",
-            "b64912206ffec3ea07f4c715ad8840f5"
-    };
 
     public static String getHexColor(int r, int g, int b,
                                      boolean inverseOrder) {
@@ -129,10 +117,35 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
         }
     }
 
+    @Override
+    public void onMapClick(LatLng point) {
+        Location point1_this = new Location("My point"), point2_center = new Location("Center point");
+
+        point1_this.setLatitude(point.latitude);
+        point1_this.setLongitude(point.longitude);
+
+        for (final SuperBubble s: testUniverse) {
+            point2_center.setLatitude(s.getLatitude());
+            point2_center.setLongitude(s.getLonguitude());
+
+            double distance = point2_center.distanceTo(point1_this);
+
+            if (distance <= s.getRadius()) {
+                cur = s;
+                dlg = new GroupDialog(s.getImageLink(), s.getDescription(), s.getName(), cur);
+                dlg.show(getFragmentManager(), "groupdialog");
+                break;
+            }
+        }
+
+    }
 
     private class RetrieveMessages extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... urls) {
-            downloaded = false;
+            while(downloaded)
+            {
+               SystemClock.sleep(1000);
+            }
             HttpClient client = new DefaultHttpClient();
             String json = "";
             try {
@@ -141,7 +154,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
                 HttpResponse response = client.execute(request);
                 BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 
-                    while ((line = rd.readLine()) != null) {
+                while ((line = rd.readLine()) != null) {
                     json += line + System.getProperty("line.separator");
                 }
             } catch (IllegalArgumentException e1) {
@@ -160,9 +173,9 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
                 downloadBubbleRadius= c.getString(TAG_RADIUS);
                 downloadBubbleDescription = c.getString(TAG_DESCRIPTION);
                 downloadBubbleTitle = c.getString(TAG_TITLE);
-                //notification("sound link = " + downloadBubbleSound, false);
             }
             catch (JSONException c){}
+            downloaded = true;
 
             return json;
         }
@@ -170,20 +183,27 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
         }
 
         protected void onPostExecute(String result) {
-            String [] rgb = downloadBubbleColor.split(",",3);
-            int r = Integer.parseInt(rgb[0]), g = Integer.parseInt(rgb[1]), b = Integer.parseInt(rgb[2]);
-
             nulize();
+            String [] rgb = downloadBubbleColor.split(",",3);
+            int r = 123, g = 123, b = 123;
 
-            tempBubble.setColor(getHexColor(r,g,b,true));
+            if(rgb[0]!="") {
+                r = Integer.parseInt(rgb[0]);
+                g = Integer.parseInt(rgb[1]);
+                b = Integer.parseInt(rgb[2]);
+                tempBubble.setColor(getHexColor(r,g,b,true));
+            }
+
+           // testUniverse.add(new SuperBubble(new Bubble(r,g,b,Float.parseFloat(downloadBubbleLatitude),Float.parseFloat(downloadBubbleLongutide),Integer.parseInt(downloadBubbleRadius),downloadBubbleTitle,downloadBubbleDescription,downloadBubbleSound,downloadBubbleImage)));
+
             tempBubble.setRadius(Float.parseFloat(downloadBubbleRadius));
             tempBubble.setLatitude(Float.parseFloat(downloadBubbleLatitude));
             tempBubble.setLonguitude(Float.parseFloat(downloadBubbleLongutide));
             tempBubble.setAudioLink(downloadBubbleSound);
+            tempBubble.setImageLink(downloadBubbleImage);
+            tempBubble.setDescription(downloadBubbleDescription);
+            tempBubble.setName(downloadBubbleTitle);
 
-            tempSuperBubble.imageLink = downloadBubbleImage;
-            tempSuperBubble.description = downloadBubbleDescription;
-            tempSuperBubble.title = downloadBubbleTitle;
 
             tempSuperBubble.addBubble(tempBubble);
             testUniverse.add(tempSuperBubble);
@@ -191,7 +211,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
             if(downloadBubbleSound != "") cur = tempSuperBubble;
 
             synchronized (lock) {
-                downloaded = true;
+                downloaded = false;
                 lock.notifyAll();
             }
 
@@ -214,20 +234,8 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
         tempBubble.setPlayer(this);
         if(!same) tempSuperBubble = new SuperBubble();
     }
-    public void setPlayerAll()
-    {
-        for (SuperBubble s: testUniverse
-        ) {
-            s.setPlayer(this);
-            s.draw_bubble(mMap);
-        }
-    }
     public void checkForBubbleInteraction()
     {
-
-
-
-
         //float[] results = new float[5];
         updateLocationUI();
         getDeviceLocation();
@@ -244,9 +252,11 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
 
             double distance = point2_center.distanceTo(point1_this);
 
-            if (distance <= s.getRadius())
-            {
-                cur = s;
+            if (distance <= s.getRadius()) {
+                if (!notif)
+                {
+                    notif = true;
+                    cur = s;
 
                 context = this;
                 String title = "You are in Bubble", message = "Would you like listen?", button1String = "Yes", button2String = "No";
@@ -255,26 +265,31 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
                 ad.setMessage(message);
                 ad.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int arg1) {
-                        Toast.makeText(context, "Go on",Toast.LENGTH_LONG).show();
-                        s.play_go();
+                        Toast.makeText(context, "Go on", Toast.LENGTH_LONG).show();
+                        if(s.getAudioLink()!= "")s.play_go();
+                        else Toast.makeText(context, "No audio", Toast.LENGTH_SHORT).show();
+                        notif = false;
                     }
                 });
                 ad.setNegativeButton(button2String, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int arg1) {
                         Toast.makeText(context, "Go off", Toast.LENGTH_LONG).show();
+                        notif = false;
                     }
                 });
                 ad.setCancelable(true);
                 ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
                     public void onCancel(DialogInterface dialog) {
                         Toast.makeText(context, "No means no", Toast.LENGTH_LONG).show();
+                        notif = false;
                     }
                 });
-                if(!s.getPlaying()) ad.show();
+                if (!s.getPlaying()) ad.show();
                 //s.play_go();
                 // notification("Checking # " + checked++ + " (" + distance + " m ) : " + "Listening", false);
                 // toast = Toast.makeText(getApplicationContext(), "Checking # " + checked++ + " (" + distance + " m ) : " + "Listening", Toast.LENGTH_SHORT);
                 break;
+            }
             }
             else {
                 if(s.getPlaying())
@@ -298,11 +313,25 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
         startActivity(new Intent(getApplicationContext(),MainActivity.class));
         return true;
     }
+
+    private void setUpMap() //If the setUpMapIfNeeded(); is needed then...
+    {
+        mMap.setOnMapClickListener(this);
+    }
+public void setPlayersAll()
+{
+    for (SuperBubble s: testUniverse
+         ) {
+        for (Bubble b: s.getAllBubble()
+             ) {
+            b.setPlayer(this);
+        }
+
+    }
+}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
 
         if (savedInstanceState != null) {
             mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
@@ -320,35 +349,19 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        notification("Map opened", false);
-        downloadBubble("72ccf2966fdc7eb01c56d7481c6ef9bd", false);
-        downloadBubble("59acd52a90a3cd6e85937a146641e341", false);
-        downloadBubble("ef51b4a8e7b261a2ec3be0087ac5f86b", false);
-        downloadBubble("2fbcf636069b2e44b4b41e7edb7e6cea", false);
-        downloadBubble("80cb7300c1921fd7cf79b4ad54d45a3b", false);
-        downloadBubble("fa59738b5d6378c5a9cba14e9c326c99", true);
-        downloadBubble("b0b9af68a344cbdd66ce7495daf268ec", false);
-        downloadBubble("2c85e1b1dbda067e3d93c5d81eb6d74d", false);
-        downloadBubble("73d678cffb29c1cd4ff89a84b6cb6dec", true);
-        downloadBubble("9815e1dbe76789c5f3e6c4639d1ea23e", false);
-        downloadBubble("eb67ef9a0d58910cb0d70c5921787585", true);
-        downloadBubble("b64912206ffec3ea07f4c715ad8840f5", false);
-        downloadEnded = true;
 
 
+
+        Toast.makeText(getApplicationContext(), "Data downloaded", Toast.LENGTH_LONG).show();
 
         timer = new Timer(true);
 
-        timerTask = new TimerTask()
-        {
+        timerTask = new TimerTask() {
             @Override
-            public void run()
-            {
-                handler.post(new Runnable()
-                {
+            public void run() {
+                handler.post(new Runnable() {
                     @Override
-                    public void run()
-                    {
+                    public void run() {
                         checkForBubbleInteraction();
                     }
                 });
@@ -356,7 +369,68 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
         };
         timer.schedule(timerTask, 2000, 10000);
 
+        notification("Downloading data", false);
+
+        downloadBubble("73d678cffb29c1cd4ff89a84b6cb6dec", false);
+        downloadBubble("7515fb1ae1230c7a6d9effff64b1dc63", false);
+        downloadBubble("bbd840d2acd86caee2203cfc06b1e2f5", false);
+        downloadBubble("9e4a72fcf2a4bfa6ea1969069dd013d6", false);
+        downloadBubble("4b39b3fafe2f48403baaf35bc7c699e2", false);
+        downloadBubble("7cdcdd29a4c5d8b569c973b5b1fedb08", false);
+        downloadBubble("f6b19ad4af41178b6f9d49969937f7fe", false);
+        downloadBubble("37eebbcbdc6cc907756e60c3fefed54a", false);
+        downloadBubble("2527fdff82e9cbc85de900610f66de14", false);
+        downloadBubble("422e547db04c4f537ee84969dd9cc8d1", false);
+        downloadBubble("af87fb49d89b747fd55f25daf43e8bfb", false);
+        downloadBubble("e8ff7985994bc3181fb93712e2fa2b7f", false);
+        downloadBubble("cdd7cc6927d0ed3e45e99b7032888bed", false);
+        downloadBubble("98225669f6144fac873abb84b8a61e36", false);
+        downloadBubble("dab3d375e24fb36e95fa0ea06c739223", false);
+        downloadBubble("b8cd1bcf6e67232c0d89394cb6eeaaf4", false);
+        downloadBubble("c62f5a14afd7a607e5e1384c4ab6ef00", false);
+        downloadBubble("1fe77c7e24357f97be941291a689735d", false);
+        downloadBubble("b1c6d09c2edf7bca0ff372594042a989", false);
+        downloadBubble("f593150c958fa10a04797b6bbeb881a8", false);
+        downloadBubble("482d63ff6ab63e72b4b655b25d63117d", false);
+        downloadBubble("1123b8c7afb18d419a7d88325d24cd21", false);
+        downloadBubble("5617ef41ee69a1dcab6af30631d0bd4b", false);
+        downloadBubble("624cbbd2f9a911b65414c804930b0465", false);
+        downloadBubble("6e6737f7c60cafc2cbace1940064cd03", false);
+        downloadBubble("37f03abcc42c58eeb8c4a214a989a0d8", false);
+        downloadBubble("148340132dce031b44a8f0b13ba55b47", false);
+        downloadBubble("74b8a0cd9264d403ea5f949eeaca814e", false);
+        downloadBubble("0d746d19e0edeed557a423c655ff2cca", false);
+        downloadBubble("3c24259c9b84a8607e0c82ac58d2ce7d", false);
+        downloadBubble("b4340aacaa7db7519671f29579457121", false);
+        downloadBubble("e1704c3add3c69a24887a5f9a8b6a24d", false);
+        downloadBubble("d27bb26e91c50ad53793130804a36e71", false);
+        downloadBubble("d06679cb8fafa8a9876c03c33269b81a", false);
+        downloadBubble("99369ec651267243c1d1250b9e00c874", false);
+        downloadBubble("0604f98acf4e413adb318f16e1429a71", false);
+        downloadBubble("e3e4ac7cab032100534dde912c6b19d1", false);
+        downloadBubble("05f4b424b19c8fb3f63a31d9beba9c2e", false);
+        downloadBubble("8839883438303d8f97b456e828ea6524", false);
+        downloadBubble("b0b9af68a344cbdd66ce7495daf268ec", false);
+        downloadBubble("2fbcf636069b2e44b4b41e7edb7e6cea", false);
+        downloadBubble("ef51b4a8e7b261a2ec3be0087ac5f86b", false);
+        downloadBubble("acf14624a8e1b815c17f74bd0f8bbad9", false);
+        downloadBubble("bd1ce78289666b6331208d9efe9fab9b", false);
+        downloadBubble("f7aa2d1c0576d8a8d4d8920e47ae8124", false);
+        downloadBubble("2c85e1b1dbda067e3d93c5d81eb6d74d", false);
+        downloadBubble("9815e1dbe76789c5f3e6c4639d1ea23e", false);
+        downloadBubble("80cb7300c1921fd7cf79b4ad54d45a3b", false);
+        downloadBubble("72ccf2966fdc7eb01c56d7481c6ef9bd", false);
+        downloadBubble("b64912206ffec3ea07f4c715ad8840f5", false);
+        downloadBubble("59acd52a90a3cd6e85937a146641e341", false);
+
+
+
+        downloadBubble("d497c34f43c1e2329f9cc7cb14ee2842", false);
+
+        setPlayersAll();
+        notification("Players setted", false);
     }
+
     private void downloadBubble(String doi, boolean twiced)
     {
         if(twiced)
@@ -367,9 +441,8 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
         {
             same = false;
         }
-        new RetrieveMessages().execute("http://soundways.eu/interface/geosound.php?_action=getGeoSound&geosounddoi=" + doi);
         synchronized (lock) {
-            while (!downloaded) {
+            while (downloaded) {
                 try {
                     lock.wait();
                 }
@@ -378,7 +451,10 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
                     Toast.makeText(getApplicationContext(), "WTF", Toast.LENGTH_SHORT).show();
                 }
             }
+            Toast.makeText(getApplicationContext(), " .. downloading .. ", Toast.LENGTH_SHORT).show();
         }
+        new RetrieveMessages().execute("http://soundways.eu/interface/geosound.php?_action=getGeoSound&geosounddoi=" + doi);
+
 
     }
 
@@ -406,32 +482,18 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getItemId() == R.id.menu_zoom)
-        {
-            if(moveCamera) {
+        if (item.getItemId() == R.id.menu_zoom) {
+            if (moveCamera) {
                 notification("Zoom was turn off", false);
-                item.setTitle("ZON");
+                item.setTitle("ZOOM - TURN ON");
                 moveCamera = false;
-            }
-            else
-            {
+            } else {
                 notification("Zoom was turn on", false);
-                item.setTitle("ZOFF");
+                item.setTitle("ZOOM - TURN OFF");
                 moveCamera = true;
             }
         }
-        if(item.getItemId() == R.id.menu_info)
-        {
-            notification(cur.getAudioLink(), false);
-            dlg = new GroupDialog(cur.imageLink, cur.title + "\n" + cur.description);
-            dlg.show(getFragmentManager(), "groupdialog");
-        }
-        if(item.getItemId() == R.id.menu_sound)
-        {
-            setPlayerAll();
-            notification("Test Sounds", false);
-            cur.sound_play();
-        }
+
         return true;
     }
 
@@ -474,6 +536,8 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
         getLocationPermission();
         updateLocationUI();
         getDeviceLocation();
+
+        setUpMap();
     }
     public void getDeviceLocation() {
         try {
