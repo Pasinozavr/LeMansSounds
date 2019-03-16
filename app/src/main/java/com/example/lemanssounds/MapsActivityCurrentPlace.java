@@ -2,6 +2,7 @@ package com.example.lemanssounds;
 
 import android.app.AlertDialog;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -25,6 +27,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,12 +44,22 @@ import com.google.android.gms.tasks.Task;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import android.widget.Toolbar;
 
 import org.apache.http.HttpResponse;
@@ -58,6 +71,151 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
+
+    private String allBubbleDois = "";
+    private static final class Lock { }
+    private final Object lock = new Lock();
+    private PowerManager.WakeLock mWakeLock;
+    public static String getHexColor(int r, int g, int b,
+                                     boolean inverseOrder) {
+        String red, green, blue;
+        String val = Integer.toHexString(r).toUpperCase();
+        red = val.length() == 1 ? "0" + val : val; // add leading zero
+        val = Integer.toHexString(g).toUpperCase();
+        green = val.length() == 1 ? "0" + val : val; // add leading zero
+        val = Integer.toHexString(b).toUpperCase();
+        blue = val.length() == 1 ? "0" + val : val; // add leading zero
+        if (!inverseOrder) {
+            return blue + green + red;
+        } else {
+            return red + green + blue;
+        }
+    }
+    private class GetContacts extends AsyncTask<String, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Showing progress dialog
+
+            synchronized (lock)
+            {
+                while(downloaded)
+                {
+                    try{
+                        lock.wait();
+                    }
+                    catch(InterruptedException e)
+                    {
+
+                    }
+                }
+            }
+            synchronized (lock) {
+                downloaded = false;
+                lock.notifyAll();
+            }
+        }
+
+        @Override
+        protected Void doInBackground(String... arg) {
+
+            HttpHandler sh = new HttpHandler();
+            // Making a request to url and getting response
+            String jsonStr = sh.makeServiceCall(arg[0]);
+
+            Log.e(TAG, "Response from url: " + jsonStr);
+
+            if (jsonStr != null) {
+                try {
+                    JSONObject ob = new JSONObject(jsonStr);
+                    geoSoundTitle = ob.getJSONArray(TAG_GEOSOUNDS);
+                    JSONObject c = geoSoundTitle.getJSONObject(0);
+                    downloadBubbleImage = c.getString(TAG_IMAGE);
+                    downloadBubbleSound = c.getString(TAG_SOUND);
+                    downloadBubbleColor = c.getString(TAG_COLOR);
+                    downloadBubbleLatitude= c.getString(TAG_LATITUDE);
+                    downloadBubbleLongutide= c.getString(TAG_LONGITUDE);
+                    downloadBubbleRadius= c.getString(TAG_RADIUS);
+                    downloadBubbleDescription = c.getString(TAG_DESCRIPTION);
+                    downloadBubbleTitle = c.getString(TAG_TITLE);
+
+                } catch (final JSONException e) {
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Json parsing error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
+
+                }
+            } else {
+                Log.e(TAG, "Couldn't get json from server.");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),
+                                "Couldn't get json from server. Check LogCat for possible errors!",
+                                Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            nulize();
+
+            int r = 123, g = 123, b = 123;
+
+            if(!downloadBubbleColor.equals("") && downloadBubbleColor != null) {
+                String [] rgb = downloadBubbleColor.split(",",3);
+                r = Integer.parseInt(rgb[0]);
+                g = Integer.parseInt(rgb[1]);
+                b = Integer.parseInt(rgb[2]);
+                tempBubble.setColor(getHexColor(r,g,b,true));
+            }
+
+
+            tempBubble.setLatitude(Float.parseFloat(downloadBubbleLatitude));
+            tempBubble.setRadius(Integer.parseInt(downloadBubbleRadius));
+            tempBubble.setLonguitude(Float.parseFloat(downloadBubbleLongutide));
+            tempBubble.setAudioLink(downloadBubbleSound);
+            tempBubble.setImageLink(downloadBubbleImage);
+            tempBubble.setDescription(downloadBubbleDescription);
+            tempBubble.setName(downloadBubbleTitle);
+
+            tempBubble.player = new MyMediaPlayer();
+            tempBubble.player.initialize(MapsActivityCurrentPlace.this, emptySound);
+
+
+            if(downloadBubbleSound != "" && downloadBubbleSound != null)
+            {
+                if(downloadBubbleSound.length()<10)downloadBubbleSound = emptySound;
+                tempBubble.player.initialize(MapsActivityCurrentPlace.this, downloadBubbleSound);
+            }
+            tempBubble.player.play();
+
+            tempSuperBubble.addBubble(tempBubble);
+            testUniverse.add(tempSuperBubble);
+
+            if(downloadBubbleSound != "") cur = tempSuperBubble;
+
+            synchronized (lock) {
+                downloaded = true;
+                lock.notifyAll();
+            }
+            }
+        }
+
+
     private static final String TAG = MapsActivityCurrentPlace.class.getSimpleName();
     public GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
@@ -75,7 +233,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
     public final Handler handler = new Handler();
     public TimerTask timerTask;
     private Toolbar toolbar;
-    public boolean moveCamera = false, downloaded = false, same = false, notif = false;
+    public boolean moveCamera = false, downloaded = false, same = false, notif = false, firstGo = true;
     private DialogFragment dlg;
     private AlertDialog.Builder ad;
     private Context context;
@@ -89,10 +247,10 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
     private static final String TAG_COLOR = "geosound_color";
     private static final String TAG_LATITUDE= "latitude";
     private static final String TAG_LONGITUDE= "longitude";
-    private static final String TAG_RADIUS= "radius";
-    private static final String TAG_DESCRIPTION= "geosound_description";
-    private static final String TAG_TITLE= "geosound_title";
-    private static final String TAG_AUTOR= "geosound_author";
+    private static final String TAG_RADIUS = "radius";
+    private static final String TAG_DESCRIPTION = "geosound_description";
+    private static final String TAG_TITLE = "geosound_title";
+    private static final String TAG_AUTOR = "geosound_author";
     private JSONArray geoSoundTitle = null;
 
     private String emptySound = "https://soundways.eu/data/sounds/sound_a3ca2bb33e0708c5c9bbd01d19370407.mp3";
@@ -100,24 +258,9 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
 
     private Bubble tempBubble = new Bubble();
     private SuperBubble tempSuperBubble = new SuperBubble();
-    private static final class Lock { }
-    private final Object lock = new Lock();
 
-    public static String getHexColor(int r, int g, int b,
-                                     boolean inverseOrder) {
-        String red, green, blue;
-        String val = Integer.toHexString(r).toUpperCase();
-        red = val.length() == 1 ? "0" + val : val; // add leading zero
-        val = Integer.toHexString(g).toUpperCase();
-        green = val.length() == 1 ? "0" + val : val; // add leading zero
-        val = Integer.toHexString(b).toUpperCase();
-        blue = val.length() == 1 ? "0" + val : val; // add leading zero
-        if (!inverseOrder) {
-            return blue + green + red;
-        } else {
-            return red + green + blue;
-        }
-    }
+
+
 
     @Override
     public void onMapClick(LatLng point) {
@@ -142,101 +285,6 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
 
     }
 
-    private class RetrieveMessages extends AsyncTask<String, Void, String> {
-        protected String doInBackground(String... urls) {
-            while(downloaded)
-            {
-               SystemClock.sleep(1000);
-            }
-
-            HttpClient client = new DefaultHttpClient();
-            String json = "";
-            try {
-                String line = "";
-                HttpGet request = new HttpGet(urls[0]);
-                HttpResponse response = client.execute(request);
-                BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-
-                while ((line = rd.readLine()) != null) {
-                    json += line + System.getProperty("line.separator");
-                }
-            } catch (IllegalArgumentException e1) {
-            } catch (IOException e2) {
-            }
-
-            try {
-                JSONObject ob = new JSONObject(json);
-                geoSoundTitle = ob.getJSONArray(TAG_GEOSOUNDS);
-                JSONObject c = geoSoundTitle.getJSONObject(0);
-                downloadBubbleImage = c.getString(TAG_IMAGE);
-                downloadBubbleSound = c.getString(TAG_SOUND);
-                downloadBubbleColor = c.getString(TAG_COLOR);
-                downloadBubbleLatitude= c.getString(TAG_LATITUDE);
-                downloadBubbleLongutide= c.getString(TAG_LONGITUDE);
-                downloadBubbleRadius= c.getString(TAG_RADIUS);
-                downloadBubbleDescription = c.getString(TAG_DESCRIPTION);
-                downloadBubbleTitle = c.getString(TAG_TITLE);
-            }
-            catch (JSONException c){}
-            downloaded = true;
-
-            return json;
-        }
-        protected void onProgressUpdate(Void... progress) {
-        }
-
-        protected void onPostExecute(String result) {
-            nulize();
-
-            int r = 123, g = 123, b = 123;
-
-            if(!downloadBubbleColor.equals("") && downloadBubbleColor != null) {
-                String [] rgb = downloadBubbleColor.split(",",3);
-                r = Integer.parseInt(rgb[0]);
-                g = Integer.parseInt(rgb[1]);
-                b = Integer.parseInt(rgb[2]);
-                tempBubble.setColor(getHexColor(r,g,b,true));
-            }
-
-
-            tempBubble.setLatitude(Float.parseFloat(downloadBubbleLatitude));
-            tempBubble.setRadius(Integer.parseInt(downloadBubbleRadius));
-            tempBubble.setLonguitude(Float.parseFloat(downloadBubbleLongutide));
-            tempBubble.setAudioLink(downloadBubbleSound);
-            tempBubble.setImageLink(downloadBubbleImage);
-            tempBubble.setDescription(downloadBubbleDescription);
-            tempBubble.setName(downloadBubbleTitle);
-
-
-
-            if(downloadBubbleSound != "" && downloadBubbleSound != null)
-            {
-                tempBubble.player = new MyMediaPlayer();
-                tempBubble.player.initialize(MapsActivityCurrentPlace.this, downloadBubbleSound);
-                tempBubble.player.play();
-            }
-            else
-            {
-                tempBubble.player = new MyMediaPlayer();
-                tempBubble.player.initialize(MapsActivityCurrentPlace.this, emptySound);
-                tempBubble.player.play();
-            }
-            //tempBubble.setPlayer(MapsActivityCurrentPlace.this);
-            //createPlayer( tempBubble);
-
-            tempSuperBubble.addBubble(tempBubble);
-            testUniverse.add(tempSuperBubble);
-
-            if(downloadBubbleSound != "") cur = tempSuperBubble;
-
-            synchronized (lock) {
-                downloaded = false;
-                lock.notifyAll();
-            }
-
-        }
-
-    }
     private void createPlayer(final Bubble b)
     {
         b.setPlayer(this);
@@ -259,7 +307,6 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
     }
     public void checkForBubbleInteraction()
     {
-        //float[] results = new float[5];
         updateLocationUI();
         getDeviceLocation();
 
@@ -391,14 +438,14 @@ public void setPlayersAll()
         timer.schedule(timerTask, 2000, 10000);
 
         notification("Downloading data", false);
-/*
+
+
+
         downloadBubble("73d678cffb29c1cd4ff89a84b6cb6dec", false);
         downloadBubble("7515fb1ae1230c7a6d9effff64b1dc63", false);
-        */
         downloadBubble("bbd840d2acd86caee2203cfc06b1e2f5", false);
         downloadBubble("9e4a72fcf2a4bfa6ea1969069dd013d6", false);
         downloadBubble("4b39b3fafe2f48403baaf35bc7c699e2", false);
-        /*
         downloadBubble("7cdcdd29a4c5d8b569c973b5b1fedb08", false);
         downloadBubble("f6b19ad4af41178b6f9d49969937f7fe", false);
         downloadBubble("37eebbcbdc6cc907756e60c3fefed54a", false);
@@ -445,9 +492,6 @@ public void setPlayersAll()
         downloadBubble("72ccf2966fdc7eb01c56d7481c6ef9bd", false);
         downloadBubble("b64912206ffec3ea07f4c715ad8840f5", false);
         downloadBubble("59acd52a90a3cd6e85937a146641e341", false);
-
-
-*/
         downloadBubble("d497c34f43c1e2329f9cc7cb14ee2842", false);
 
         //setPlayersAll();
@@ -466,20 +510,11 @@ public void setPlayersAll()
         {
             same = false;
         }
-        synchronized (lock) {
-            while (downloaded) {
-                try {
-                    lock.wait();
-                }
-                catch (InterruptedException e)
-                {
-                    Toast.makeText(getApplicationContext(), "WTF", Toast.LENGTH_SHORT).show();
-                }
-            }
-            Toast.makeText(getApplicationContext(), " .. downloading .. ", Toast.LENGTH_SHORT).show();
-        }
-        new RetrieveMessages().execute("http://soundways.eu/interface/geosound.php?_action=getGeoSound&geosounddoi=" + doi);
 
+        //String json = new HttpHandler().makeServiceCall("http://soundways.eu/interface/geosound.php?_action=getGeoSound&geosounddoi=" + doi);
+
+        if (downloaded) notification("downloading data", true);
+        new GetContacts().execute("http://soundways.eu/interface/geosound.php?_action=getGeoSound&geosounddoi=" + doi);
 
     }
 
@@ -573,10 +608,11 @@ public void setPlayersAll()
                     public void onComplete(@NonNull Task<Location> task) {
                         if (task.isSuccessful()) {
                             mLastKnownLocation = task.getResult();
-                            if(moveCamera)
+                            if(moveCamera || firstGo)
                             {mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                     new LatLng(mLastKnownLocation.getLatitude(),
-                                            mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));}
+                                            mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+                            firstGo = false;}
                             currentPlace = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
                         } else {
                             Log.d(TAG, "Current location is null. Using defaults.");

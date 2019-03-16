@@ -38,7 +38,6 @@ public class MyMediaPlayer {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
     }
 
     public void stop()

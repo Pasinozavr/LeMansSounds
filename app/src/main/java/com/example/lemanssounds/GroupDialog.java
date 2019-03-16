@@ -36,12 +36,11 @@ public class GroupDialog extends DialogFragment implements OnClickListener {
         txtVw2 = v.findViewById(R.id.textGroup2);
         btn = v.findViewById(R.id.button_group);
 
-        { btn.setClickable(false); btn.setEnabled(false);}
+        if (s.getAllBubble().get(0).getAudioLink() == ""){ btn.setClickable(false); btn.setEnabled(false);}
 
         btn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (s.getAllBubble().get(0).getAudioLink() == "")
                 if(!s.getPlaying())s.play_go();
                 else s.play_stop();
             }
@@ -50,7 +49,6 @@ public class GroupDialog extends DialogFragment implements OnClickListener {
         new DownloadImageTask(img).execute(temp1);
         txtVw.setText(temp3);
         txtVw2.setText("\n" + temp2 + "\n");
-
 
         img.setOnClickListener(this);
         txtVw.setOnClickListener(this);

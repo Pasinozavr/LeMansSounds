@@ -1,6 +1,7 @@
 package com.example.lemanssounds;
 
 import android.app.Activity;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import java.util.ArrayList;
@@ -31,17 +32,8 @@ public class SuperBubble extends Bubble {
     {
         if(!playing)
         {
-            Random rnd = new Random();
-            int size = listOfBubbles.size(), playFirst = rnd.nextInt(size), playSecond = rnd.nextInt(size), levelFirst = listOfBubbles.get(playFirst).getLevel(), levelSecond = listOfBubbles.get(playSecond).getLevel();
             listOfBubbles.get(0).sound_play();
-/*
-            do {
-                playSecond = rnd.nextInt(size);
-                levelSecond = listOfBubbles.get(playSecond).getLevel();
-            } while ( levelSecond == levelFirst);
-
-            listOfBubbles.get(playSecond).sound_play();
-            */
+            if (listOfBubbles.size() > 1) listOfBubbles.get(1).sound_play();
             playing = true;
         }
     }

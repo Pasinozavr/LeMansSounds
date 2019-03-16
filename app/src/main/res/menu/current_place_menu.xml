@@ -6,7 +6,7 @@
 
     <item
         android:id="@+id/menu_zoom"
-        android:title="ZOOM - TURN OFF"
+        android:title="ZOOM - TURN ON"
         app:showAsAction="always"/>
 
 
