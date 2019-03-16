@@ -83,7 +83,8 @@ public class JSONTests extends AppCompatActivity {
 
         protected void onPostExecute(String result) {
             new DownloadImageTask(imgVw).execute(image_url);
-            mp = new MyMediaPlayer(JSONTests.this, sound_url);
+            mp = new MyMediaPlayer();
+            mp.initialize(JSONTests.this, sound_url);
             mp.play();
         }
 

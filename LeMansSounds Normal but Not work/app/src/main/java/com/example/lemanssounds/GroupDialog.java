@@ -17,7 +17,7 @@ public class GroupDialog extends DialogFragment implements OnClickListener {
     SuperBubble s;
     ImageView img;
     TextView txtVw, txtVw2;
-    Button btn;
+    public Button btn;
 
     public GroupDialog(String imgLink, String txt, String nm, SuperBubble s)
     {
@@ -35,10 +35,13 @@ public class GroupDialog extends DialogFragment implements OnClickListener {
         txtVw = v.findViewById(R.id.textGroup);
         txtVw2 = v.findViewById(R.id.textGroup2);
         btn = v.findViewById(R.id.button_group);
-        if (s.getAllBubble().get(0).getAudioLink() == ""){ btn.setClickable(false);btn.setEnabled(false);}
+
+        { btn.setClickable(false); btn.setEnabled(false);}
+
         btn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (s.getAllBubble().get(0).getAudioLink() == "")
                 if(!s.getPlaying())s.play_go();
                 else s.play_stop();
             }

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -74,7 +75,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
     public final Handler handler = new Handler();
     public TimerTask timerTask;
     private Toolbar toolbar;
-    public boolean moveCamera = true, downloaded = false, same = false, notif = false;
+    public boolean moveCamera = false, downloaded = false, same = false, notif = false;
     private DialogFragment dlg;
     private AlertDialog.Builder ad;
     private Context context;
@@ -94,6 +95,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
     private static final String TAG_AUTOR= "geosound_author";
     private JSONArray geoSoundTitle = null;
 
+    private String emptySound = "https://soundways.eu/data/sounds/sound_a3ca2bb33e0708c5c9bbd01d19370407.mp3";
     private String downloadBubbleTitle, downloadBubbleDescription, downloadBubbleImage, downloadBubbleSound, downloadBubbleColor, downloadBubbleLatitude, downloadBubbleLongutide, downloadBubbleRadius;
 
     private Bubble tempBubble = new Bubble();
@@ -146,6 +148,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
             {
                SystemClock.sleep(1000);
             }
+
             HttpClient client = new DefaultHttpClient();
             String json = "";
             try {
@@ -184,26 +187,42 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
 
         protected void onPostExecute(String result) {
             nulize();
-            String [] rgb = downloadBubbleColor.split(",",3);
+
             int r = 123, g = 123, b = 123;
 
-            if(rgb[0]!="") {
+            if(!downloadBubbleColor.equals("") && downloadBubbleColor != null) {
+                String [] rgb = downloadBubbleColor.split(",",3);
                 r = Integer.parseInt(rgb[0]);
                 g = Integer.parseInt(rgb[1]);
                 b = Integer.parseInt(rgb[2]);
                 tempBubble.setColor(getHexColor(r,g,b,true));
             }
 
-           // testUniverse.add(new SuperBubble(new Bubble(r,g,b,Float.parseFloat(downloadBubbleLatitude),Float.parseFloat(downloadBubbleLongutide),Integer.parseInt(downloadBubbleRadius),downloadBubbleTitle,downloadBubbleDescription,downloadBubbleSound,downloadBubbleImage)));
 
-            tempBubble.setRadius(Float.parseFloat(downloadBubbleRadius));
             tempBubble.setLatitude(Float.parseFloat(downloadBubbleLatitude));
+            tempBubble.setRadius(Integer.parseInt(downloadBubbleRadius));
             tempBubble.setLonguitude(Float.parseFloat(downloadBubbleLongutide));
             tempBubble.setAudioLink(downloadBubbleSound);
             tempBubble.setImageLink(downloadBubbleImage);
             tempBubble.setDescription(downloadBubbleDescription);
             tempBubble.setName(downloadBubbleTitle);
 
+
+
+            if(downloadBubbleSound != "" && downloadBubbleSound != null)
+            {
+                tempBubble.player = new MyMediaPlayer();
+                tempBubble.player.initialize(MapsActivityCurrentPlace.this, downloadBubbleSound);
+                tempBubble.player.play();
+            }
+            else
+            {
+                tempBubble.player = new MyMediaPlayer();
+                tempBubble.player.initialize(MapsActivityCurrentPlace.this, emptySound);
+                tempBubble.player.play();
+            }
+            //tempBubble.setPlayer(MapsActivityCurrentPlace.this);
+            //createPlayer( tempBubble);
 
             tempSuperBubble.addBubble(tempBubble);
             testUniverse.add(tempSuperBubble);
@@ -217,6 +236,10 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
 
         }
 
+    }
+    private void createPlayer(final Bubble b)
+    {
+        b.setPlayer(this);
     }
     public void notification(String text, boolean isLong)
     {
@@ -350,8 +373,6 @@ public void setPlayersAll()
         }
 
 
-
-
         Toast.makeText(getApplicationContext(), "Data downloaded", Toast.LENGTH_LONG).show();
 
         timer = new Timer(true);
@@ -370,12 +391,14 @@ public void setPlayersAll()
         timer.schedule(timerTask, 2000, 10000);
 
         notification("Downloading data", false);
-
+/*
         downloadBubble("73d678cffb29c1cd4ff89a84b6cb6dec", false);
         downloadBubble("7515fb1ae1230c7a6d9effff64b1dc63", false);
+        */
         downloadBubble("bbd840d2acd86caee2203cfc06b1e2f5", false);
         downloadBubble("9e4a72fcf2a4bfa6ea1969069dd013d6", false);
         downloadBubble("4b39b3fafe2f48403baaf35bc7c699e2", false);
+        /*
         downloadBubble("7cdcdd29a4c5d8b569c973b5b1fedb08", false);
         downloadBubble("f6b19ad4af41178b6f9d49969937f7fe", false);
         downloadBubble("37eebbcbdc6cc907756e60c3fefed54a", false);
@@ -424,10 +447,12 @@ public void setPlayersAll()
         downloadBubble("59acd52a90a3cd6e85937a146641e341", false);
 
 
-
+*/
         downloadBubble("d497c34f43c1e2329f9cc7cb14ee2842", false);
 
-        setPlayersAll();
+        //setPlayersAll();
+        MediaPlayer tempMediaMpayer = MediaPlayer.create(MapsActivityCurrentPlace.this, R.raw.finished);
+        tempMediaMpayer.start();
         notification("Players setted", false);
     }
 

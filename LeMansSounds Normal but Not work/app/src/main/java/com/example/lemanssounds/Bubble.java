@@ -11,11 +11,12 @@ import static com.example.lemanssounds.MapsActivityCurrentPlace.getHexColor;
 
 
 public class Bubble {
-    private float radius, volume;
+    private float volume;
+    private int radius;
     private double longuitude, latitude;
     private String audioLink, color, name, description, imageLink, autor;
     private int level;
-    private MyMediaPlayer player;
+    public MyMediaPlayer player;
     private boolean playing = false;
 
     //private Activity act;
@@ -24,6 +25,7 @@ public class Bubble {
         radius = 50;
         audioLink = "";
         color= "FF0000";
+        player = new MyMediaPlayer();
     }
     public Bubble(int r, int g, int b, double lat, double lon, int rad, String textName, String textDescription, String textAudioLink, String textImageLink)
     {
@@ -37,10 +39,12 @@ public class Bubble {
         name = textName;
         imageLink = textImageLink;
         level = 1;
+        player = new MyMediaPlayer();
     }
+
     public void setPlayer(Activity act){
        // this.act = act;
-        player = new MyMediaPlayer(act, audioLink);
+        player.initialize(act, audioLink);
     }
     public void setLonguitude (double tmp)
     {
@@ -50,7 +54,7 @@ public class Bubble {
     {
         latitude = tmp;
     }
-    public void setRadius (float tmp)
+    public void setRadius (int tmp)
     {
         if (tmp > 0 && tmp < 500) radius = tmp;
     }
@@ -69,7 +73,7 @@ public class Bubble {
 
     public double getLonguitude () { return longuitude;}
     public double getLatitude () { return latitude;}
-    public float getRadius () { return radius;}
+    public int getRadius () { return radius;}
     public float getVolume () { return volume;}
     public String getAudioLink () { return audioLink;}
     public String getColor () { return color;}

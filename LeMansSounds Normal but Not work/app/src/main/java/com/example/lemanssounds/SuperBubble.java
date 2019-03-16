@@ -65,7 +65,7 @@ public class SuperBubble extends Bubble {
         return listOfBubbles.get(0).getLonguitude();
     }
     @Override
-    public float getRadius()
+    public int getRadius()
     {
         return listOfBubbles.get(0).getRadius();
     }
