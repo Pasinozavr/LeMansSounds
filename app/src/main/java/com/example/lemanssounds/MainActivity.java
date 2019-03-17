@@ -24,8 +24,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    boolean langq = false;//eng
-
+    boolean langq = true;
     private static final String[] INITIAL_PERMS={
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.READ_CONTACTS
@@ -79,48 +78,53 @@ public class MainActivity extends AppCompatActivity
             requestPermissions(INITIAL_PERMS, INITIAL_REQUEST);
         }
 
-
         (menu.findItem(R.id.menu_switch_language)).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                MenuItem map = menu.findItem(R.id.menu_map), help = menu.findItem(R.id.menu_help), about = menu.findItem(R.id.menu_about), tools = menu.findItem(R.id.menu_tools), json = menu.findItem(R.id.menu_json), lang = menu.findItem(R.id.menu_switch_language), act = menu.findItem(R.id.menu_activities), settings = menu.findItem(R.id.menu_settings), for_dev = menu.findItem(R.id.menu_for_dev);
-                if (langq)
-                {
-                    map.setTitle("Carte du Mans");
-                    help.setTitle("Aidez-moi");
-                    about.setTitle("Sujet");
-                    tools.setTitle("Outiols");
-                    json.setTitle("Tests JSON");
-                    lang.setTitle("Changer de langue");
-                    act.setTitle("Activités");
-                    settings.setTitle("Réglages");
-                    for_dev.setTitle("Pour les développeurs");
-                    ((TextView)findViewById(R.id.textView2)).setText(R.string.main_description_FR);
-                    ((TextView)findViewById(R.id.textView3)).setText(R.string.main_direction_FR);
-                    langq = false;
-                }
-                else
-                {
-                    map.setTitle("Le Mans Map");
-                    help.setTitle("Help");
-                    about.setTitle("About");
-                    tools.setTitle("Tools");
-                    json.setTitle("JSON tests");
-                    lang.setTitle("Language switch");
-                    act.setTitle("Activities");
-                    settings.setTitle("Settings");
-                    for_dev.setTitle("For developers");
-                    ((TextView)findViewById(R.id.textView2)).setText(R.string.main_description_ENG);
-                    ((TextView)findViewById(R.id.textView3)).setText(R.string.main_direction_ENG);
-                    langq = true;
-                }
-
+                changeLanguage();
                 return false;
             }
         });
 
+        changeLanguage();
     }
 
+    private void changeLanguage()
+    {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final Menu menu = navigationView.getMenu();
+        MenuItem map = menu.findItem(R.id.menu_map), help = menu.findItem(R.id.menu_help), about = menu.findItem(R.id.menu_about), tools = menu.findItem(R.id.menu_tools), json = menu.findItem(R.id.menu_json), lang = menu.findItem(R.id.menu_switch_language), act = menu.findItem(R.id.menu_activities), settings = menu.findItem(R.id.menu_settings), for_dev = menu.findItem(R.id.menu_for_dev);
+        if (langq)
+        {
+            map.setTitle(R.string.map_FR);
+            help.setTitle(R.string.help_FR);
+            about.setTitle(R.string.about_FR);
+            tools.setTitle(R.string.tools_FR);
+            json.setTitle(R.string.tests_FR);
+            lang.setTitle(R.string.lang_FR);
+            act.setTitle(R.string.act_FR);
+            settings.setTitle(R.string.set_FR);
+            for_dev.setTitle(R.string.dev_FR);
+            ((TextView)findViewById(R.id.textView2)).setText(R.string.main_description_FR);
+            ((TextView)findViewById(R.id.textView3)).setText(R.string.main_direction_FR);
+            langq = false;
+        }
+        else
+        {
+            map.setTitle(R.string.map_EN);
+            help.setTitle(R.string.help_EN);
+            about.setTitle(R.string.about_EN);
+            tools.setTitle(R.string.tools_EN);
+            json.setTitle(R.string.tests_EN);
+            lang.setTitle(R.string.lang_EN);
+            act.setTitle(R.string.act_EN);
+            settings.setTitle(R.string.set_EN);
+            for_dev.setTitle(R.string.dev_EN);
+            ((TextView)findViewById(R.id.textView2)).setText(R.string.main_description_ENG);
+            ((TextView)findViewById(R.id.textView3)).setText(R.string.main_direction_ENG);
+            langq = true;
+        }
+    }
     private boolean canAccessLocation() {
         return(hasPermission(Manifest.permission.ACCESS_FINE_LOCATION));
     }
