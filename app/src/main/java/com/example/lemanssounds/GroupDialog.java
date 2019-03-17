@@ -47,7 +47,7 @@ public class GroupDialog extends DialogFragment implements OnClickListener {
         });
 
         new DownloadImageTask(img).execute(temp1);
-        txtVw.setText(temp3);
+        txtVw.setText(temp3 +" ( " + s.getAllBubble().size() +" bubbles )");
         txtVw2.setText("\n" + temp2 + "\n");
 
         img.setOnClickListener(this);
