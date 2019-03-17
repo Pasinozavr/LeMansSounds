@@ -267,6 +267,8 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
             if (distance <= s.getRadius()) {
                 cur = s;
                 dlg = new GroupDialog(s.getImageLink(), s.getDescription(), s.getName(), cur);
+
+                dlg.setStyle(DialogFragment.STYLE_NO_FRAME, 0);
                 dlg.show(getFragmentManager(), "groupdialog");
                 break;
             }
