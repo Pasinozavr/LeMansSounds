@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <item android:title="Activities" android:id="@+id/menu_activities">
+    <item android:title="@string/act_FR" android:id="@+id/menu_activities">
         <menu>
             <item
                 android:id="@+id/menu_map"
                 android:icon="@drawable/menu_map"
-                android:title="@string/map_ENG" />
+                android:title="@string/map_FR" />
             <item
                 android:title="Distance walking"
                 android:id="@+id/menu_switch"
@@ -18,31 +18,31 @@
             <item
                 android:id="@+id/menu_help"
                 android:icon="@drawable/menu_help"
-                android:title="Help" />
+                android:title="@string/help_FR" />
             <item
                 android:id="@+id/menu_about"
                 android:icon="@drawable/menu_about"
-                android:title="About" />
+                android:title="@string/about_FR"  />
         </menu>
     </item>
-    <item android:title="Setting" android:id="@+id/menu_settings">
+    <item android:title="@string/set_FR" android:id="@+id/menu_settings">
         <menu>
             <item
                 android:icon="@drawable/menu_language"
-                android:title="Language switch"
+                android:title="@string/lang_FR"
                 android:id="@+id/menu_switch_language"
                 />
             <item
                 android:id="@+id/menu_tools"
                 android:icon="@drawable/menu_setting"
-                android:title="Tools" />
+                android:title="@string/tools_FR" />
         </menu>
     </item>
-    <item android:title="For developers" android:id="@+id/menu_for_dev">
+    <item android:title="@string/dev_FR" android:id="@+id/menu_for_dev">
         <menu>
             <item
                 android:id="@+id/menu_json"
-                android:title="JSON tests"
+                android:title="@string/tests_FR"
                 android:icon="@drawable/menu_json"/>
         </menu>
     </item>

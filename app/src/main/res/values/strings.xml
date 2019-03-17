@@ -19,8 +19,29 @@
     <string name="help">\nThere will be a lot of text about Help\n</string>
     <string name="about">\nThere will be a lot of text about About\t</string>
     <string name="title_activity_settings">Settings</string>
-    <string name="map_ENG">Le Mans Map</string>
+    <string name="map_EN">Le Mans Map</string>
     <string name="map_FR">Carte du Mans</string>
+    <string name="help_EN">Help</string>
+    <string name="help_FR">Aidez-moi</string>
+    <string name="about_EN">About</string>
+    <string name="about_FR">Sujet</string>
+    <string name="lang_EN">Language switch</string>
+    <string name="lang_FR">Changer de langue</string>
+    <string name="tools_EN">Tools</string>
+    <string name="tools_FR">Outiols</string>
+    <string name="tests_EN">JSON Tests</string>
+    <string name="tests_FR">JSON Tests</string>
+    <string name="dev_EN">For developers</string>
+    <string name="dev_FR">Pour les développeurs</string>
+    <string name="act_EN">Activities</string>
+    <string name="act_FR">Activités</string>
+    <string name="set_EN">Settings</string>
+    <string name="set_FR">Parametres</string>
+
+
+
+
+
 
     <!-- Strings related to Settings -->
 
