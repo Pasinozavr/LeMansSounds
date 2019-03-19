@@ -13,11 +13,11 @@ import android.widget.TextView;
 
 public class GroupDialog extends DialogFragment implements OnClickListener {
 
-    String temp1, temp2, temp3;
-    SuperBubble s;
-    ImageView img;
-    TextView txtVw, txtVw2;
-    public Button btn;
+    private String temp1, temp2, temp3;
+    private SuperBubble s;
+    private ImageView img;
+    private TextView txtVw, txtVw2;
+    private  Button btn;
 
     public GroupDialog(String imgLink, String txt, String nm, SuperBubble s)
     {
