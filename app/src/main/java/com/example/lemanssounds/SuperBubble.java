@@ -1,16 +1,22 @@
 package com.example.lemanssounds;
 
-import android.app.Activity;
-import android.widget.Toast;
-
 import com.google.android.gms.maps.GoogleMap;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class SuperBubble extends Bubble {
     private List<Bubble> listOfBubbles;
     private boolean playing = false;
+    private int order;
+
+    public int getOrder()
+    {
+        return order;
+    }
+    public void setOrder(int r)
+    {
+        order = r;
+    }
 
     public SuperBubble(Bubble b)
     {
@@ -27,6 +33,10 @@ public class SuperBubble extends Bubble {
     public void draw_bubble (GoogleMap map)
     {
         listOfBubbles.get(0).draw_bubble(map);
+    }
+    public void draw_polygon (GoogleMap map)
+    {
+        listOfBubbles.get(0).draw_polygon(map);
     }
     public void play_go ()
     {
