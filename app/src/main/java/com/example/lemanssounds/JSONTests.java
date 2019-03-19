@@ -27,19 +27,14 @@ public class JSONTests extends AppCompatActivity {
     private static final String TAG_GEOSOUNDS = "geosounds";
     private static final String TAG_IMAGE = "geosound_picture";
     private static final String TAG_SOUND = "geosound_soundfile";
-    private static final String TAG_COLOR = "geosound_color";
-    private static final String TAG_LATITUDE= "latitude";
-    private static final String TAG_LONGITUDE= "longitude";
-    JSONArray user = null;
+    private JSONArray user = null;
 
-    Button btnPushMe, button_stop;
-    Toolbar toolbar;
-    ImageView imgVw;
+    private Button btnPushMe, button_stop;
+    private Toolbar toolbar;
+    private ImageView imgVw;
 
-    String image_url="";
-    String sound_url="";
-    String color="";
-    Float lat, lon;
+    private String image_url = "", sound_url = "";
+
 
     MyMediaPlayer mp;
 
@@ -120,7 +115,7 @@ public class JSONTests extends AppCompatActivity {
 
         button_stop.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(mp.mediaPlayer.isPlaying())
+                if(mp.getMediaPlayer().isPlaying())
                 {
                     mp.pause();
                     Toast.makeText(getApplicationContext(), "Stopped",  Toast.LENGTH_SHORT).show();
