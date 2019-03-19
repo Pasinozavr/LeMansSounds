@@ -11,9 +11,13 @@ import android.widget.Toast;
 import java.io.IOException;
 
 public class MyMediaPlayer {
-    public MediaPlayer mediaPlayer;
-    public AudioManager am;
-    public String cont;
+    private MediaPlayer mediaPlayer;
+    private AudioManager am;
+    private String cont;
+    public MediaPlayer getMediaPlayer()
+    {
+        return mediaPlayer;
+    }
     public MyMediaPlayer()
     {
         cont = Context.AUDIO_SERVICE;
