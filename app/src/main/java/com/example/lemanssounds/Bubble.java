@@ -4,6 +4,9 @@ package com.example.lemanssounds;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.PolygonOptions;
+
 import android.app.Activity;
 import android.graphics.Color;
 
@@ -16,16 +19,19 @@ public class Bubble {
     private double longuitude, latitude;
     private String audioLink, color, name, description, imageLink, autor;
     private int level;
-    public MyMediaPlayer player;
+    private MyMediaPlayer player;
     private boolean playing = false;
 
-    //private Activity act;
     public Bubble() {
         level = 1;
         radius = 50;
         audioLink = "";
         color= "FF0000";
         player = new MyMediaPlayer();
+    }
+    public MyMediaPlayer getPlayer()
+    {
+        return player;
     }
     public Bubble(int r, int g, int b, double lat, double lon, int rad, String textName, String textDescription, String textAudioLink, String textImageLink)
     {
@@ -43,8 +49,8 @@ public class Bubble {
     }
 
     public void setPlayer(Activity act){
-       // this.act = act;
         player.initialize(act, audioLink);
+        player.play();
     }
     public void setLonguitude (double tmp)
     {
@@ -86,6 +92,12 @@ public class Bubble {
                 .fillColor(Color.parseColor("#22" + color ))
                 .strokeWidth(1);
         map.addCircle(circleOptions);
+    }
+    public void draw_polygon(GoogleMap map)
+    {
+        map.addPolygon(new PolygonOptions()
+                .add(new LatLng(latitude - 0.0001, longuitude + 0.0001), new LatLng(latitude + 0.0001, longuitude + 0.0001),  new LatLng(latitude + 0.0001, longuitude - 0.0001),  new LatLng(latitude - 0.0001, longuitude - 0.0001))
+                .strokeColor(Color.RED));
     }
 
     public void sound_pause()
