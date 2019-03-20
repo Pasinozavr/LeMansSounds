@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="8" />
+    <option name="CUSTOM_SCOPE_NAME" value="Report for Claudine" />
+  </component>
   <component name="AndroidLayouts">
     <shared>
       <config />
     </shared>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="621e844b-5b31-4e94-b435-a3c1e8f6cd8d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="621e844b-5b31-4e94-b435-a3c1e8f6cd8d" name="Default Changelist" comment="Encapsulation">
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/classAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/androidTest/java/com/example/lemanssounds/ExampleInstrumentedTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/groupdialog.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/groupdialog.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/test/java/com/example/lemanssounds/ExampleUnitTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -72,109 +75,67 @@
     <session id="1233447941">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="6" />
+          <entry key="project.open.time.17" value="2" />
           <entry key="project.open.time.18" value="1" />
-          <entry key="project.opened" value="1" />
+          <entry key="project.open.time.20" value="1" />
+          <entry key="project.open.time.25" value="1" />
+          <entry key="project.open.time.27" value="1" />
+          <entry key="project.open.time.30" value="1" />
+          <entry key="project.opened" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="java" value="2" />
+          <entry key="gradle" value="4" />
+          <entry key="java" value="40" />
           <entry key="style" value="1" />
-          <entry key="xml" value="1" />
+          <entry key="xml" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="2" />
+          <entry key="Groovy" value="4" />
+          <entry key="JAVA" value="40" />
           <entry key="JSON" value="1" />
-          <entry key="XML" value="1" />
+          <entry key="XML" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="142" />
-          <entry key="txt" value="5" />
+          <entry key="gradle" value="4" />
+          <entry key="java" value="5693" />
+          <entry key="txt" value="197" />
+          <entry key="xml" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="142" />
-          <entry key="PLAIN_TEXT" value="5" />
+          <entry key="Groovy" value="4" />
+          <entry key="JAVA" value="5693" />
+          <entry key="PLAIN_TEXT" value="197" />
+          <entry key="XML" value="2" />
         </counts>
       </usages-collector>
     </session>
   </component>
+  <component name="FavoritesManager">
+    <favorites_list name="LeMansSounds" />
+  </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/MapsActivityCurrentPlace.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="764">
-              <caret line="262" column="58" selection-start-line="262" selection-start-column="58" selection-end-line="262" selection-end-column="58" />
-              <folding>
-                <element signature="e#6810#7197#0" expanded="true" />
-                <element signature="e#7196#7197#0" expanded="true" />
-                <element signature="e#7332#7714#0" expanded="true" />
-                <element signature="e#7713#7714#0" expanded="true" />
-                <element signature="e#14636#14637#0" expanded="true" />
-                <element signature="e#14684#14685#0" expanded="true" />
-                <element signature="e#15639#15945#0" expanded="true" />
-                <element signature="e#15740#15919#0" expanded="true" />
-                <element signature="e#15918#15919#0" expanded="true" />
-                <element signature="e#15944#15945#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/SuperBubble.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="35" column="76" selection-start-line="35" selection-start-column="76" selection-end-line="35" selection-end-column="76" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/GroupDialog.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="419">
-              <caret line="48" column="50" selection-start-line="48" selection-start-column="50" selection-end-line="48" selection-end-column="50" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/groupdialog.xml">
-          <provider editor-type-id="text-editor" />
-          <provider selected="true" editor-type-id="android-designer2" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/current_place_menu.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
-              <caret line="8" column="37" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer2" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/MyMediaPlayer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="28" selection-start-line="28" selection-end-line="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
       <find>Context</find>
+      <find>drawALl</find>
+      <find>drawAL</find>
+      <find>drawaLL</find>
+      <find>ringSound</find>
+      <find>inter</find>
+      <find>mapCli</find>
+      <find>drawA</find>
+      <find>GroupDi</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -183,15 +144,27 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/MyMediaPlayer.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/current_place_menu.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/SuperBubble.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/raw/style" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/MapsActivityCurrentPlace.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/GroupDialog.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/groupdialog.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/About.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/Bubble.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/MapsActivityCurrentPlace.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/DownloadImageTask.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/GroupDialog.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/Help.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/HttpHandler.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/JSONTests.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/MyMediaPlayer.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/SuperBubble.java" />
       </list>
     </option>
+  </component>
+  <component name="NamedScopeManager">
+    <scope name="Report for Claudine" pattern="src[app]:com.example.lemanssounds.Help||src[app]:com.example.lemanssounds.Bubble||src[app]:com.example.lemanssounds.HttpHandler||src[app]:com.example.lemanssounds.JSONTests||src[app]:com.example.lemanssounds.DownloadImageTask||src[app]:com.example.lemanssounds.MyMediaPlayer||src[app]:com.example.lemanssounds.BuildConfig||src[app]:com.example.lemanssounds.MainActivity||src[app]:com.example.lemanssounds.SuperBubble||src[app]:com.example.lemanssounds.GroupDialog||src[app]:com.example.lemanssounds.About||src[app]:com.example.lemanssounds.MapsActivityCurrentPlace" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="width" value="960" />
@@ -205,9 +178,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="ProjectPane" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -223,48 +193,26 @@
             <path>
               <item name="LeMansSounds" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="lemanssounds" type="cbb59c9e:AndroidPsiDirectoryNode" />
             </path>
             <path>
               <item name="LeMansSounds" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="layout" type="ddeffd01:AndroidResFolderTypeNode" />
-            </path>
-            <path>
-              <item name="LeMansSounds" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="menu" type="ddeffd01:AndroidResFolderTypeNode" />
-            </path>
-            <path>
-              <item name="LeMansSounds" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="mipmap" type="ddeffd01:AndroidResFolderTypeNode" />
-            </path>
-            <path>
-              <item name="LeMansSounds" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="raw" type="ddeffd01:AndroidResFolderTypeNode" />
-            </path>
-            <path>
-              <item name="LeMansSounds" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="values" type="ddeffd01:AndroidResFolderTypeNode" />
+              <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="ProjectPane" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -364,27 +312,122 @@
       <option name="project" value="LOCAL" />
       <updated>1552853699262</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="no caps">
+      <created>1552867382648</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1552867382648</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Encapsulation">
+      <created>1552960910867</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1552960910867</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Encapsulation">
+      <created>1552960923313</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1552960923313</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Encapsulation">
+      <created>1552960931142</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1552960931142</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Encapsulation">
+      <created>1552960939845</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1552960939845</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Encapsulation">
+      <created>1552960949543</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1552960949543</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Encapsulation">
+      <created>1552960957072</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1552960957072</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Encapsulation, Downloading from server with one link to all bubbles json, Ordering">
+      <created>1552960993338</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1552960993338</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Encapsulation">
+      <created>1552961001378</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1552961001378</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Encapsulation">
+      <created>1552961009301</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1552961009301</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Needed few changes for downloading 5 mb json. Also increased speed of app work">
+      <created>1552961059762</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1552961059762</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Optimisation">
+      <created>1552961079990</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1552961079990</updated>
+    </task>
+    <task id="LOCAL-00015" summary="comments">
+      <created>1553101604867</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1553101604867</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-4" y="-4" width="1928" height="1044" extended-state="6" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.14376996" />
-      <window_info id="Structure" order="2" side_tool="true" />
-      <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info id="Build Variants" order="4" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.4983871" visible="true" weight="0.10969116" />
+      <window_info id="Structure" order="2" sideWeight="0.5016129" side_tool="true" weight="0.10969116" />
+      <window_info id="Favorites" order="3" sideWeight="0.5016129" side_tool="true" weight="0.10969116" />
+      <window_info id="Build Variants" order="4" sideWeight="0.5016129" side_tool="true" weight="0.10969116" />
       <window_info id="Image Layers" order="5" />
       <window_info id="Designer" order="6" />
       <window_info id="Capture Tool" order="7" />
+      <window_info anchor="bottom" id="Run" weight="0.32972974" />
+      <window_info anchor="bottom" id="Debug" />
       <window_info anchor="bottom" id="Version Control" order="0" show_stripe_button="false" />
       <window_info anchor="bottom" id="Logcat" order="1" />
       <window_info anchor="bottom" id="TODO" order="2" />
-      <window_info anchor="bottom" id="Terminal" order="3" weight="0.32972974" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="3" visible="true" weight="0.32972974" />
       <window_info anchor="bottom" id="Event Log" order="4" side_tool="true" />
-      <window_info anchor="bottom" id="Build" order="5" visible="true" weight="0.3264865" />
+      <window_info anchor="bottom" id="Build" order="5" weight="0.15243243" />
       <window_info anchor="bottom" id="Android Profiler" order="6" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Find" order="7" weight="0.32972974" />
+      <window_info anchor="bottom" id="Messages" order="8" weight="0.32972974" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Gradle" order="2" />
@@ -398,16 +441,24 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="color" />
-    <option name="LAST_COMMIT_MESSAGE" value="color" />
+    <MESSAGE value="no caps" />
+    <MESSAGE value="Encapsulation, Downloading from server with one link to all bubbles json, Ordering" />
+    <MESSAGE value="Encapsulation" />
+    <MESSAGE value="Needed few changes for downloading 5 mb json. Also increased speed of app work" />
+    <MESSAGE value="Optimisation" />
+    <MESSAGE value="comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="comments" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/SuperBubble.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/raw/style">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="35" column="76" selection-start-line="35" selection-start-column="76" selection-end-line="35" selection-end-column="76" />
+        <state relative-caret-position="1891">
+          <caret line="197" column="7" selection-start-line="197" selection-start-column="7" selection-end-line="197" selection-end-column="7" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/test/java/com/example/lemanssounds/ExampleUnitTest.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/androidTest/java/com/example/lemanssounds/ExampleInstrumentedTest.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/current_place_menu.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="128">
@@ -416,63 +467,224 @@
       </provider>
       <provider editor-type-id="android-designer2" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/MyMediaPlayer.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
+        <state relative-caret-position="240">
+          <caret line="15" column="36" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
         </state>
       </provider>
+      <provider editor-type-id="android-manifest" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/raw/style">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1891">
-          <caret line="197" column="7" selection-start-line="197" selection-start-column="7" selection-end-line="197" selection-end-column="7" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/groupdialog.xml">
+      <provider editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/test/java/com/example/lemanssounds/ExampleUnitTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/androidTest/java/com/example/lemanssounds/ExampleInstrumentedTest.java">
+    <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/MapsActivityCurrentPlace.java">
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="764">
-          <caret line="262" column="58" selection-start-line="262" selection-start-column="58" selection-end-line="262" selection-end-column="58" />
+        <state relative-caret-position="656">
+          <caret line="41" column="54" selection-start-line="41" selection-start-column="54" selection-end-line="41" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/AppCompatPreferenceActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="17" column="3" lean-forward="true" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/Bubble.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1112">
+          <caret line="134" column="29" selection-start-line="134" selection-start-column="29" selection-end-line="134" selection-end-column="29" />
           <folding>
-            <element signature="e#6810#7197#0" expanded="true" />
-            <element signature="e#7196#7197#0" expanded="true" />
-            <element signature="e#7332#7714#0" expanded="true" />
-            <element signature="e#7713#7714#0" expanded="true" />
-            <element signature="e#14636#14637#0" expanded="true" />
-            <element signature="e#14684#14685#0" expanded="true" />
-            <element signature="e#15639#15945#0" expanded="true" />
-            <element signature="e#15740#15919#0" expanded="true" />
-            <element signature="e#15918#15919#0" expanded="true" />
-            <element signature="e#15944#15945#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#2629#2981#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/About.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="30" selection-start-line="30" selection-end-line="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#toolBarSet#0;class#About#0" />
+            <element signature="method#onSupportNavigateUp#0;class#About#0" />
+            <element signature="method#onCreate#0;class#About#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/GroupDialog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="419">
-          <caret line="48" column="50" selection-start-line="48" selection-start-column="50" selection-end-line="48" selection-end-column="50" />
+        <state relative-caret-position="783">
+          <caret line="74" column="5" selection-start-line="74" selection-start-column="5" selection-end-line="74" selection-end-column="5" />
+          <folding>
+            <element signature="method#GroupDialog#0;class#GroupDialog#0" />
+            <element signature="method#onCreateView#0;class#GroupDialog#0" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/groupdialog.xml">
-      <provider editor-type-id="text-editor" />
-      <provider selected="true" editor-type-id="android-designer2" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/DownloadImageTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="26" column="7" lean-forward="true" selection-start-line="26" selection-start-column="7" selection-end-line="26" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/HttpHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="551">
+          <caret line="51" column="43" selection-start-line="51" selection-start-column="43" selection-end-line="51" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#makeServiceCall#0;class#HttpHandler#0" />
+            <element signature="method#convertStreamToString#0;class#HttpHandler#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/MapsActivityCurrentPlace.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="509">
+          <caret line="261" selection-start-line="261" selection-end-line="266" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/JSONTests.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="86" column="9" selection-start-line="86" selection-start-column="9" selection-end-line="86" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#onPause#0;class#JSONTests#0" />
+            <element signature="method#doInBackground#0;class#RetrieveMessages#0;class#JSONTests#0" />
+            <element signature="method#onPostExecute#0;class#RetrieveMessages#0;class#JSONTests#0" />
+            <element signature="method#toolBarSet#0;class#JSONTests#0" />
+            <element signature="method#onSupportNavigateUp#0;class#JSONTests#0" />
+            <element signature="method#onCreate#0;class#JSONTests#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/Help.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="29" selection-start-line="29" selection-end-line="33" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#toolBarSet#0;class#Help#0" />
+            <element signature="method#onSupportNavigateUp#0;class#Help#0" />
+            <element signature="method#onCreate#0;class#Help#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="529">
+          <caret line="78" column="74" selection-start-line="78" selection-start-column="74" selection-end-line="78" selection-end-column="74" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#onCreate#0;class#MainActivity#0" />
+            <element signature="e#1582#1984#0" expanded="true" />
+            <element signature="e#1983#1984#0" expanded="true" />
+            <element signature="e#2728#2938#0" expanded="true" />
+            <element signature="e#2937#2938#0" expanded="true" />
+            <element signature="method#changeLanguage#0;class#MainActivity#0" />
+            <element signature="e#4179#4194#0" expanded="true" />
+            <element signature="e#4223#4239#0" expanded="true" />
+            <element signature="e#4269#4286#0" expanded="true" />
+            <element signature="e#4316#4333#0" expanded="true" />
+            <element signature="e#4362#4379#0" expanded="true" />
+            <element signature="e#4408#4424#0" expanded="true" />
+            <element signature="e#4452#4467#0" expanded="true" />
+            <element signature="e#4500#4515#0" expanded="true" />
+            <element signature="e#4547#4562#0" expanded="true" />
+            <element signature="e#4626#4654#0" expanded="true" />
+            <element signature="e#4718#4744#0" expanded="true" />
+            <element signature="method#canAccessLocation#0;class#MainActivity#0" />
+            <element signature="method#canAccessContacts#0;class#MainActivity#0" />
+            <element signature="method#hasPermission#0;class#MainActivity#0" />
+            <element signature="method#onBackPressed#0;class#MainActivity#0" />
+            <element signature="e#5952#5995#0" expanded="true" />
+            <element signature="method#onNavigationItemSelected#0;class#MainActivity#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/MyMediaPlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="702">
+          <caret line="49" column="29" selection-start-line="49" selection-start-column="29" selection-end-line="49" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#MyMediaPlayer#0;class#MyMediaPlayer#0" />
+            <element signature="method#initialize#0;class#MyMediaPlayer#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/SettingsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="36" column="13" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/lemanssounds/SuperBubble.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1053">
+          <caret line="69" column="4" selection-start-line="69" selection-start-column="4" selection-end-line="69" selection-end-column="4" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#play_go#0;class#SuperBubble#0" />
+            <element signature="method#play_stop#0;class#SuperBubble#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/generated/source/buildConfig/debug/com/example/lemanssounds/BuildConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="81">
+          <caret line="5" column="19" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <last-edited>Report for Claudine</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+          <order>
+            <scope name="Report for Claudine" />
+          </order>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>
