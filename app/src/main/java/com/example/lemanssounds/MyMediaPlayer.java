@@ -1,15 +1,13 @@
 package com.example.lemanssounds;
 
-
 import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.util.Log;
-import android.widget.Toast;
-
 import java.io.IOException;
-
+/**
+ * media player data with extended functionality
+ */
 public class MyMediaPlayer {
     private MediaPlayer mediaPlayer;
     private AudioManager am;
@@ -27,10 +25,15 @@ public class MyMediaPlayer {
         mediaPlayer = new MediaPlayer();
 
     }
+    /**
+     * initialisation
+     *
+     * @param act activity where to play sound
+     * @param link link to audio
+     */
     public void initialize(Activity act, String link)
     {
             am = (AudioManager) act.getSystemService(cont);
-
             try {
                 if(link != "") {
                     mediaPlayer.setDataSource(link);
@@ -43,7 +46,9 @@ public class MyMediaPlayer {
                 e.printStackTrace();
             }
     }
-
+    /**
+     * main functions for any player
+     */
     public void stop()
     {
         mediaPlayer.stop();

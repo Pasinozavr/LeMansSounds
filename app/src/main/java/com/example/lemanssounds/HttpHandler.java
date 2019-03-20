@@ -11,14 +11,21 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-
+/**
+ * class for download simplification
+ */
 public class HttpHandler {
-
     private static final String TAG = HttpHandler.class.getSimpleName();
-
+    /**
+     * has no parameters for creation
+     */
     public HttpHandler() {
     }
-
+    /**
+     * take JSON
+     *
+     * @param reqUrl link
+     */
     public String makeServiceCall(String reqUrl) {
         String response = null;
         try {
@@ -39,7 +46,11 @@ public class HttpHandler {
         }
         return response;
     }
-
+    /**
+     * give String
+     *
+     * @return JSON if simple String format
+     */
     private String convertStreamToString(InputStream is) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();

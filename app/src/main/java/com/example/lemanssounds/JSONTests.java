@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.Toolbar;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -16,12 +15,12 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-
+/**
+ * JSON Test page class
+ */
 public class JSONTests extends AppCompatActivity {
     public static String link_canal1 = "http://soundways.eu/interface/geosound.php?_action=getGeoSound&geosounddoi=156c4db87bfb7325011fd85470b46419";
     private static final String TAG_GEOSOUNDS = "geosounds";
@@ -34,8 +33,9 @@ public class JSONTests extends AppCompatActivity {
     private ImageView imgVw;
 
     private String image_url = "", sound_url = "";
-
-
+    /**
+     * has its own media player because has no bubble
+     */
     MyMediaPlayer mp;
 
     @Override
@@ -43,8 +43,9 @@ public class JSONTests extends AppCompatActivity {
         super.onPause();
         finish();
     }
-
-
+    /**
+     * Download image and sound by links with 'old' http client
+     */
     private class RetrieveMessages extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... urls) {
             HttpClient client = new DefaultHttpClient();
@@ -75,15 +76,19 @@ public class JSONTests extends AppCompatActivity {
         }
         protected void onProgressUpdate(Void... progress) {
         }
-
+        /**
+         * set image and sound
+         */
         protected void onPostExecute(String result) {
             new DownloadImageTask(imgVw).execute(image_url);
             mp = new MyMediaPlayer();
             mp.initialize(JSONTests.this, sound_url);
             mp.play();
         }
-
     }
+    /**
+     * sets back-arrow and title
+     */
     private void toolBarSet() {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -95,7 +100,12 @@ public class JSONTests extends AppCompatActivity {
         onBackPressed();
         return true;
     }
-
+    /**
+     * set interface from appropriate xml file
+     * and handle button click
+     *
+     * @param savedInstanceState saved Bundle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

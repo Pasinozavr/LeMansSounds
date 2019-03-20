@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * class for group window display
+ */
 public class GroupDialog extends DialogFragment implements OnClickListener {
 
     private String temp1, temp2, temp3;
@@ -18,14 +21,20 @@ public class GroupDialog extends DialogFragment implements OnClickListener {
     private ImageView img;
     private TextView txtVw, txtVw2;
     private  Button btn;
-
-    public GroupDialog(String imgLink, String txt, String nm, SuperBubble s)
+    /**
+     * can be created only with SuperBubble object - for takes its data
+     */
+    public GroupDialog(SuperBubble s)
     {
         this.s = s;
-        temp1 = imgLink;
-        temp2 = txt;
-        temp3 = nm;
+        temp1 = s.getImageLink();
+        temp2 = s.getDescription();
+        temp3 = s.getName();
     }
+    /**
+     * set interface from appropriate xml file
+     * and define actions when clicked on button or image
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         getDialog().setTitle(temp3);
@@ -55,16 +64,15 @@ public class GroupDialog extends DialogFragment implements OnClickListener {
 
         return v;
     }
-
+    /**
+     * close if tap out of window range
+     */
     public void onClick(View v) {
         dismiss();
     }
-
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-
     }
-
     public void onCancel(DialogInterface dialog) {
         super.onCancel(dialog);
     }

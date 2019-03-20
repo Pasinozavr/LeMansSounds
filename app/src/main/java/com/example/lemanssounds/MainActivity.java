@@ -1,7 +1,6 @@
 package com.example.lemanssounds;
 
 import android.Manifest;
-import android.content.ClipData;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -16,35 +15,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.CompoundButton;
-
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+/**
+ * Start page class
+ */
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     boolean langq = true;
-    private static final String[] INITIAL_PERMS={
+    private static final String[] INITIAL_PERMS = {
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.READ_CONTACTS
     };
-    private static final String[] CAMERA_PERMS={
-            Manifest.permission.CAMERA
-    };
-    private static final String[] CONTACTS_PERMS={
-            Manifest.permission.READ_CONTACTS
-    };
-    private static final String[] LOCATION_PERMS={
-            Manifest.permission.ACCESS_FINE_LOCATION
-    };
     private static final int INITIAL_REQUEST=1337;
-    private static final int CAMERA_REQUEST=INITIAL_REQUEST+1;
-    private static final int CONTACTS_REQUEST=INITIAL_REQUEST+2;
-    private static final int LOCATION_REQUEST=INITIAL_REQUEST+3;
-    private Switch mySwitch;
 
     Intent intent_map_extra, intent_map, intent_help, intent_about, intent_tools, intent_json;
+    /**
+     * sets interface, check map permission
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +75,9 @@ public class MainActivity extends AppCompatActivity
 
         changeLanguage();
     }
-
+    /**
+     * change interface localisation language - takes data from string.xml
+     */
     private void changeLanguage()
     {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -128,20 +117,15 @@ public class MainActivity extends AppCompatActivity
     private boolean canAccessLocation() {
         return(hasPermission(Manifest.permission.ACCESS_FINE_LOCATION));
     }
-
-    private boolean canAccessCamera() {
-        return(hasPermission(Manifest.permission.CAMERA));
-    }
-
     private boolean canAccessContacts() {
         return(hasPermission(Manifest.permission.READ_CONTACTS));
     }
-
     private boolean hasPermission(String perm) {
         return(PackageManager.PERMISSION_GRANTED==checkSelfPermission(perm));
     }
-
-
+    /**
+     * nowhere to return to
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -151,20 +135,17 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.current_place_menu, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         return true;
     }
-
+    /**
+     * set actions when buttons are clicked - open other screens
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

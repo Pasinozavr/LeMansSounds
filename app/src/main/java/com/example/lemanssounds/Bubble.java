@@ -1,18 +1,17 @@
 package com.example.lemanssounds;
 
-
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
-
 import android.app.Activity;
 import android.graphics.Color;
 
 import static com.example.lemanssounds.MapsActivityCurrentPlace.getHexColor;
 
-
+/**
+ * minimal data element class - bubble
+ */
 public class Bubble {
     private float volume;
     private int radius;
@@ -21,7 +20,9 @@ public class Bubble {
     private int level;
     private MyMediaPlayer player;
     private boolean playing = false;
-
+    /**
+     * public call of new bubble creation
+     */
     public Bubble() {
         level = 1;
         radius = 50;
@@ -29,25 +30,9 @@ public class Bubble {
         color= "FF0000";
         player = new MyMediaPlayer();
     }
-    public MyMediaPlayer getPlayer()
-    {
-        return player;
-    }
-    public Bubble(int r, int g, int b, double lat, double lon, int rad, String textName, String textDescription, String textAudioLink, String textImageLink)
-    {
-        longuitude = lon;
-        latitude = lat;
-        radius = rad;
-        audioLink = textAudioLink;
-        volume = 1;
-        color = getHexColor(r,g,b,true);
-        description = textDescription;
-        name = textName;
-        imageLink = textImageLink;
-        level = 1;
-        player = new MyMediaPlayer();
-    }
-
+    /**
+     * setters
+     */
     public void setPlayer(Activity act){
         player.initialize(act, audioLink);
         player.play();
@@ -68,53 +53,10 @@ public class Bubble {
     {
         if (tmp >= 0 && tmp <=1) volume = tmp;
     }
-    public void setAudioLink (String tmp)
-    {
-        audioLink = tmp;
-       // player = new MyMediaPlayer(act, audioLink);
-    }
+    public void setAudioLink (String tmp) { audioLink = tmp; }
     public void setColor (String tmp) { color = tmp;}
     public void setLevel (int tmp) { level = tmp; }
     public void setPlaying (boolean tmp) { playing = tmp;}
-
-    public double getLonguitude () { return longuitude;}
-    public double getLatitude () { return latitude;}
-    public int getRadius () { return radius;}
-    public float getVolume () { return volume;}
-    public String getAudioLink () { return audioLink;}
-    public String getColor () { return color;}
-    public int getLevel() { return level;}
-    public boolean getPlaying() {return playing;}
-
-    public void draw_bubble(GoogleMap map) {
-        CircleOptions circleOptions = new CircleOptions()
-                .center(new LatLng(latitude, longuitude)).radius(radius)
-                .fillColor(Color.parseColor("#22" + color ))
-                .strokeWidth(1);
-        map.addCircle(circleOptions);
-    }
-    public void draw_polygon(GoogleMap map)
-    {
-        map.addPolygon(new PolygonOptions()
-                .add(new LatLng(latitude - 0.0001, longuitude + 0.0001), new LatLng(latitude + 0.0001, longuitude + 0.0001),  new LatLng(latitude + 0.0001, longuitude - 0.0001),  new LatLng(latitude - 0.0001, longuitude - 0.0001))
-                .strokeColor(Color.RED));
-    }
-
-    public void sound_pause()
-    {
-        if(audioLink!="")player.pause();
-        playing = false;
-    }
-    public void sound_stop()
-    {
-        if(audioLink!="")player.stop();
-        playing = false;
-    }
-    public void sound_play()
-    {
-        if(audioLink!="")player.play();
-        playing = true;
-    }
     public void setName(String nm)
     {
         name = nm;
@@ -123,6 +65,25 @@ public class Bubble {
     {
         description = des;
     }
+    public void setImageLink(String lnk)
+    {
+        imageLink = lnk;
+    }
+    public void setAutor(String aut)
+    {
+        autor = aut;
+    }
+    /**
+     * getters
+     */
+    public double getLonguitude () { return longuitude;}
+    public double getLatitude () { return latitude;}
+    public int getRadius () { return radius;}
+    public float getVolume () { return volume;}
+    public String getAudioLink () { return audioLink;}
+    public String getColor () { return color;}
+    public int getLevel() { return level;}
+    public boolean getPlaying() {return playing;}
     public String getName()
     {
         return name;
@@ -135,15 +96,52 @@ public class Bubble {
     {
         return imageLink;
     }
-    public void setImageLink(String lnk)
-    {
-        imageLink = lnk;
+    public String getAutor() { return autor;}
+    /**
+     * draws bubble circle
+     */
+    public void draw_bubble(GoogleMap map) {
+        CircleOptions circleOptions = new CircleOptions()
+                .center(new LatLng(latitude, longuitude)).radius(radius)
+                .fillColor(Color.parseColor("#22" + color ))
+                .strokeWidth(1);
+        map.addCircle(circleOptions);
     }
-    public void setAutor(String aut)
-    {
-        autor = aut;
+    /**
+     * draws bubble square
+     */
+    public void draw_polygon(GoogleMap map) {
+        map.addPolygon(new PolygonOptions()
+                .add(new LatLng(latitude - 0.0001, longuitude + 0.0001), new LatLng(latitude + 0.0001, longuitude + 0.0001),  new LatLng(latitude + 0.0001, longuitude - 0.0001),  new LatLng(latitude - 0.0001, longuitude - 0.0001))
+                .strokeColor(Color.RED));
     }
-    public String getAutor()
-    { return autor;}
+    /**
+     * pause sound in bubble's player
+     */
+    public void sound_pause()
+    {
+        if(audioLink != "")player.pause();
+        playing = false;
+    }
+    /**
+     * stop sound in bubble's player
+     */
+    public void sound_stop()
+    {
+        if(audioLink != "")player.stop();
+        playing = false;
+    }
+    /**
+     * start / resume playing sound in bubble's player
+     */
+    public void sound_play()
+    {
+        if(audioLink != "")player.play();
+        playing = true;
+    }
+
+
+
+
 }
 

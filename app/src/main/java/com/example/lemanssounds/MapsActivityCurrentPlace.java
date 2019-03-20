@@ -9,10 +9,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +18,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,18 +29,21 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import android.widget.Toolbar;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+/**
+ * Maps activity class handles all map work
+ */
 public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
+    /**
+     * variables of correct map displaying
+     */
     private static final String TAG = MapsActivityCurrentPlace.class.getSimpleName();
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
@@ -54,7 +54,9 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
     private Location mLastKnownLocation;
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
-
+    /**
+     * variables for correct bubble-user interaction
+     */
     private List<SuperBubble> testUniverse = new ArrayList<>();
     private LatLng currentPlace = mDefaultLocation;
     private Timer timer;
@@ -64,7 +66,9 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
     private boolean moveCamera = false, same = false, firstGo = true;
     private DialogFragment dlg;
     private SuperBubble cur;
-
+    /**
+     * variables for download
+     */
     private static final String TAG_GEOSOUNDS = "geosounds";
     private static final String TAG_IMAGE = "geosound_picture";
     private static final String TAG_SOUND = "geosound_soundfile";
@@ -79,9 +83,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
     private JSONArray geoSoundTitle = null;
     private static final String channel = "31fc06588831aa34e5879261bb189db9";
     private static final  String emptySound = "https://soundways.eu/data/sounds/sound_a3ca2bb33e0708c5c9bbd01d19370407.mp3", ringSound = "https://soundways.eu/data/sounds/sound_4b3235d35098974ad59ecbd6deb72b99.mp3";
-
     private List<String> downloadBubbleTitle = new ArrayList<>(), downloadBubbleDescription = new ArrayList<>(), downloadBubbleImage = new ArrayList<>(), downloadBubbleSound = new ArrayList<>(), downloadBubbleColor = new ArrayList<>(), downloadBubbleLatitude = new ArrayList<>(), downloadBubbleLongutide = new ArrayList<>(), downloadBubbleRadius = new ArrayList<>();
-
     private Bubble tempBubble = new Bubble(), ringBubble = new Bubble();
     private SuperBubble tempSuperBubble = new SuperBubble();
     private int numberOfBubbles = 0, currentOrder = 0;
@@ -89,11 +91,11 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
     /**
      * return a string of rgb color in hex
      *
-     * @param r
-     * @param g
-     * @param b
-     * @param inverseOrder
-     * @return
+     * @param r 0-255 parameter of red spectre
+     * @param g 0-255 parameter of green spectre
+     * @param b 0-255 parameter of blue spectre
+     * @param inverseOrder is order normal or reversed
+     * @return String looks like "FF0000"
      */
     public static String getHexColor(int r, int g, int b,
                                      boolean inverseOrder) {
@@ -110,17 +112,23 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
             return red + green + blue;
         }
     }
-
-
     /**
+     * download data from server and save it in local variables
      *
      */
-
     private class GetGeoSounds extends AsyncTask<Void, Void, Void> {
+        /**
+         * what to do before download starts (here was blocking)
+         */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
+        /**
+         * what to download and where to save, exception handling
+         *
+         * @param params additional parameters (unusable for now)
+         */
         @Override
         protected Void doInBackground(Void ... params) {
             HttpHandler sh = new HttpHandler();
@@ -171,7 +179,13 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
 
             return null;
         }
-
+        /**
+         * takes bubbles from serveur and fill local Universe with them
+         * do it with tempBubble and tempSuperBubble for resource saving
+         * check is audioLink empty and replace it with trombone sound if true
+         *
+         * @param result additional parameter (unusable for now)
+         */
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
@@ -214,8 +228,12 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
 
             }
         }
-
-
+    /**
+     * map tap handling
+     * if tap on group zone then show group dialog
+     *
+     * @param point place where user taps
+     */
     @Override
     public void onMapClick(LatLng point) {
         Location point1_this = new Location("My point"), point2_center = new Location("Center point");
@@ -232,7 +250,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
             if (distance <= s.getRadius()) {
                 currentOrder = s.getOrder();
                 cur = s;
-                dlg = new GroupDialog(s.getImageLink(), s.getDescription(), s.getName(), cur);
+                dlg = new GroupDialog(cur);
 
                 dlg.setStyle(DialogFragment.STYLE_NO_FRAME, 0);
                 dlg.show(getFragmentManager(), "groupdialog");
@@ -241,11 +259,19 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
         }
 
     }
-
+    /**
+     * unification of showing notification call
+     *
+     * @param text text of notification
+     * @param isLong duration (3.5 secs for true and 2 secs for false)
+     */
     public void notification(String text, boolean isLong)
     {
         Toast.makeText(getApplicationContext(), text,  isLong  ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
     }
+    /**
+     * display all superBubbles (one of each's bubbles)
+     */
     private void drawAll()
     {
         for (SuperBubble s: testUniverse) {
@@ -253,12 +279,26 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
             if (s.getOrder() == currentOrder + 1 || (currentOrder == numberOfBubbles - 1 && s.getOrder() == 0)) s.draw_polygon(mMap);
         }
     }
+    /**
+     * zeroing data in tempBubble uses in downloading data
+     * for not stacking extra info
+     * also recreating player for each bubble
+     */
     public void nulize()
     {
         tempBubble = new Bubble();
         tempBubble.setPlayer(this);
         if(!same) tempSuperBubble = new SuperBubble();
     }
+    /**
+     * catching if user is on bubble zone or out
+     * if in then starts to play music (or no, if STILL in)
+     * if out then stops playing
+     * calculating distance between user point and bubble centers
+     * if catches one, stop search
+     * commented lines are showing group dialog
+     * decided to avoid this because of annoyance
+     */
     public void checkForBubbleInteraction()
     {
         updateLocationUI();
@@ -326,19 +366,29 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
             }
         }
     }
+    /**
+     * handle tap on back-arrow
+     */
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
         return true;
     }
-
+    /**
+     * handle tap on map
+     */
     private void setUpMap()
     {
-
         mMap.setOnMapClickListener(this);
     }
-
+    /**
+     * actions when map screen is just creating
+     * setting interface
+     * creating timer for checking user location and bubble interaction by schedule
+     *
+     * @param savedInstanceState reference to a Bundle object using to restore a previous state using the data stored in this bundle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -381,8 +431,11 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
 
         new GetGeoSounds().execute();
     }
-
-
+    /**
+     * set camera position
+     *
+     * @param outState reference to a Bundle object
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         if (mMap != null) {
@@ -391,11 +444,19 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
             super.onSaveInstanceState(outState);
         }
     }
+    /**
+     * set menu from res
+     *
+     * @param menu exactly THAT menu
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.current_place_menu, menu);
         return true;
     }
+    /**
+     * shows info about user location
+     */
     public void nav_locate()
     {
         updateLocationUI();
@@ -403,7 +464,12 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
 
         notification("Location = " + currentPlace.latitude + " , " + currentPlace.longitude, false);
     }
-    //menu buttoms click
+    /**
+     * handling tap on menu buttons
+     * now only turn on / off camera zoom
+     *
+     * @param item which button is pressed
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -419,13 +485,16 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
                 moveCamera = true;
             }
         }
-
         return true;
     }
-
+    /**
+     * actions when map is created at first time
+     * shows title, set activity if user moves
+     *
+     * @param map which button is pressed
+     */
     @Override
     public void onMapReady(GoogleMap map) {
-
         mMap = map;
         MapStyleOptions mapStyleOptions = MapStyleOptions.loadRawResourceStyle(this, R.raw.style);
         mMap.setMapStyle(mapStyleOptions);
@@ -467,6 +536,9 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
 
         setUpMap();
     }
+    /**
+     * update device location
+     */
     public void getDeviceLocation() {
         try {
             if (mLocationPermissionGranted) {
@@ -498,6 +570,9 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
             Log.e("Exception: %s", e.getMessage());
         }
     }
+    /**
+     * check is gps location can be received
+     */
     public void getLocationPermission() {
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -509,10 +584,14 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
     }
+    /**
+     * take permission for gps location update
+     * @param requestCode code with simple transcript : yes or no
+     * @param permissions all permissions names array
+     * @param grantResults result of changes
+     */
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[],
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         mLocationPermissionGranted = false;
         switch (requestCode) {
             case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
@@ -524,6 +603,9 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
         }
         updateLocationUI();
     }
+    /**
+     * update location UI
+     */
     public void updateLocationUI() {
         if (mMap == null) {
             return;
@@ -543,5 +625,4 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
         }
 
     }
-
 }
