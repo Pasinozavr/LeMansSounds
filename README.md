@@ -1,2 +1,2 @@
 # LeMansSounds
-![Interface](https://previews.dropbox.com/p/thumb/AAUm6cxXwuZ-VH18llUbu-W-nY0c8uoxJAXMKKCP23LqQ7T496OaI7i3zwNTnV6rl3_nRZEwp0zsqK9SOkBOF8RUTdUWZKu90Jeav5TcyQQNJf-0SBEDCT0bWnlrGlOLPCyNrkuKvUKR7Gf1-hUNzUqJio24_ycV3doi_A_USMmITN9AmwcydhcYzFk0r-qXWoXB4C-Bi8DmSNtvV-gaQ_Ia7qrsjSuS9J0twpGNBHuXXtuGdIUeRbNr6A1X3-OAVFkDizM2XEJrS_1HlCkfDX3Bcq6mL_ZgG3kDQwpVHNwSMQ/p.png)
+![Interface](https://github.com/Pasinozavr/LeMansSounds/blob/master/app/src/main/res/drawable/ourapp_map.png)
