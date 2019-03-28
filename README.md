@@ -3,4 +3,4 @@
 <p> Autors </p> 
 <p> M1 : Pavlo Andriiash, Léo Boisson </p> 
 <p> M2 : Mykyta Kyrychenko, Ahmed Koubaa </p> 
-![Using](https://j.gifs.com/911JVY.gif)
+<p> ![Using](https://j.gifs.com/911JVY.gif) </p> 
