@@ -1,6 +1,6 @@
 # Project for "Le Challenge interdisciplinaire étudiant sur la Valorisation sonore de la Cité Plantagenêt"
 # LeMansSounds. Inroduction
-Ce dossier a pour objectif de presenter le travail realis ́e dans le cadre du projetde Master d’etudiants en Master 1 et Master 2 à L’universite du Mans.  
+Ce dossier a pour objectif de presenter le travail realis ́e dans le cadre du projetde Master d’etudiants en Master1 et Master2 à L’universite du Mans.  
 Ce projet s’inscrit dans le cadre d’un challenge interdisciplinaire, organise par ”Ouest industrie creatives”.  
 Son objectif est de mettre en oeuvre une valori-sation sonore de la cité Plantagenêt.  
 Pour cela, les  ́etudiants de differents domaines, pas seulement en informatique, sont amen ́es à travailler ensemble pour prototyper et experimenter des dispositifs innovants.  
@@ -15,4 +15,5 @@ L’utilisateur peut sebalader librement, ou suivre un parcours, dansle lieu, et
 La seconde partie du projet consistera à mettre en place des points de diffusions sonores fixes, tel que cela peut se faire l’et ́e lors de ”La nuit des chimères”, dans la cite Plantagenêt.  
 Ces diffusions sonores seront realisees dans la continuite du parcours sonore sous casque.  
 Les etudiants de l’ENSIM et du LAUM se chargeront de cette partie.  
+  
 ![Using](https://j.gifs.com/911JVY.gif)
