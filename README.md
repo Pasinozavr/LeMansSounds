@@ -1,6 +1,6 @@
 # Project for "Le Challenge interdisciplinaire étudiant sur la Valorisation sonore de la Cité Plantagenêt" -- LeMansSounds
-EXPÉ[LE MANS] 2018-19
-Autors
-M1 : Pavlo Andriiash, Léo Boisson
-M2 : Mykyta Kyrychenko, Ahmed Koubaa
+<p> EXPÉ[LE MANS] 2018-19
+<p> Autors
+<p> M1 : Pavlo Andriiash, Léo Boisson
+<p> M2 : Mykyta Kyrychenko, Ahmed Koubaa
 ![Using](https://j.gifs.com/911JVY.gif)
